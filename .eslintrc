@@ -1,0 +1,41 @@
+{
+  "root": true,
+  "plugins": ["import"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "extends": [
+    "plugin:import/recommended",
+    "finn",
+    "finn/node",
+    "finn-prettier"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": "test/**/*",
+      "env": {
+        "jest": true,
+        "node": true
+      },
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
+}

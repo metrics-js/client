@@ -1,0 +1,33 @@
+language: node_js
+node_js:
+- '9'
+- '8'
+script:
+- npm test
+- npm run lint
+- npm run lint:commit
+after_success:
+- curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PWD https://artifacts.schibsted.io/artifactory/api/npm/auth
+  > .npmrc
+- curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PWD https://artifacts.schibsted.io/artifactory/api/npm/npm-virtual/auth/finn-no
+  >> .npmrc
+- export NPM_TOKEN=""
+- npm run semantic-release
+cache:
+  npm: true
+  directories:
+  - node_modules
+branches:
+  only:
+  - master
+  - /^greenkeeper/.*$/
+env:
+  global:
+  - GITHUB_URL=https://github.schibsted.io
+  - GITHUB_PREFIX=/api/v3
+  - TRAVIS_URL=https://travis.schibsted.io/api
+  - NPM_EMAIL=$ARTIFACTORY_USER
+  - NPM_USERNAME=$ARTIFACTORY_USER
+  - NPM_PASSWORD=$ARTIFACTORY_PWD
+  - BUILD_LEADER_ID=2
+  - secure: O/dIiGqcI3ui6y2i3lQ17SMMacW4sqKhlypPIC49DsyySYPtAzuM/dgghzxm1HtRBXUMxBTCmGSjEQe3caBw8Nzg8Yda1pXv29rUnAlRceH1NbrW5U+H9aN68IkRv4ecM8X6H49mgPz/KhMFdWfqLwJzciKgUahWXvQZcrAEbfRHQ0GQoOh54Mo+/YyA5F0h7IA1Oq1XrBpIcF8aDGA30Hp1wxmrtGtsqRFXmBcQyLbH0s9chuvMvUE0IQOuWVHeME+3ZaLR6vR9owC2tUl6m5IkLfby+oCFbhcDK6yWTCKSNKdD2fk3uCwVFm7PNkAyD8gSlnkNF6E0ptIu8PX+D/h3YwaVEKCxzs53WNhQWA+oMq86Jtm+gn9N/n7xov4itpaoLQe64kr7gAlCVte6UPSaT+qHWHaahBrRTXPfrDS7vdS28g3xzFX+QnojWkJGoF3H1ps1OX3CZbmA0lzflithkpavHAertwDwPkn9IwsDWThO1YQeXtvnh1grcso9K/fYPVnk2a9BRYV9sq8lNquXWvx+K0gIm5UDtTQSjYtxynIA9lMlHQ8ivAVOoqGX5ogivPBixsd5yi9mgssGFb4CcKnTeKa86yck4YV93tRWWFzTt3L6lihcPB0V/cJDT6gPOuWm/cxGJnZBDKY5mY1BQ7Dwpuq/3NNQVKuKs4w=
