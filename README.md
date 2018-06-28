@@ -2,7 +2,7 @@
 
 A streaming metric producer. Allows producing counters, gauges, time series in a way that is independent of your metrics system so that you can produce metrics and let consumers decide how to consume them. Additionally, you can pipe together different metrics streams before finally consuming them all in a single location.
 
-## Usage
+## Quick start
 
 The client is intended to be used in the following way:
 
@@ -85,6 +85,74 @@ await something();
 end({ value: 123 });
 ```
 
+## Composing metric streams
+
+One of the goals of `metric-stream` is to allow any number of modules to produce their own metrics, not know about
+where they might be consumed.
+
+This can be achieved by including and instantiating a `metric-stream` client in each module, using it to create metrics and then exposing the client for consumption elsewhere.
+
+_Example_
+
+```js
+// module-1
+
+const MetricStream = require('metric-stream');
+const client = new MetricStream();
+
+client.metric({...})
+
+module.exports.metrics = client;
+```
+
+```js
+// module-2
+
+const MetricStream = require('metric-stream');
+const client = new MetricStream();
+
+client.metric({...})
+
+module.exports.metrics = client;
+```
+
+```js
+// consuming module
+const module1 = require('module-1');
+const module2 = require('module-2');
+const consumer = require('some-consumer');
+
+module1.pipe(module2).pipe(consumer);
+```
+
+## Metrics consumption
+
+In order to consume metrics produced by `metric-stream` you just need to listen for data and use your favourite metrics client to convert our data format into something usable by your system of choice.
+
+_Example: Prometheus using prom-client_
+
+```js
+const { Counter } = require('prom-client');
+const { Writable } = require('stream');
+
+class Consumer extends Writable {
+    constructor() {
+        super({ objectMode: true });
+
+        this.counter = new Counter({
+            name: 'my_metric_counter',
+            help: 'Counts http request type things',
+            labelNames: ['url', 'method'],
+        });
+    }
+
+    _write(metric, enc, cb) {
+        this.counter.labels(metric.meta.url, metric.meta.method).inc(1);
+        cb();
+    }
+}
+```
+
 ## API
 
 ### new MetricStream(options)
@@ -113,12 +181,12 @@ Collects a metric. As a minimum, a name and description for the metric must be p
 
 **options**
 
-| name          | description                                      | type            | default | required |
-| ------------- | ------------------------------------------------ | --------------- | ------- | -------- |
-| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`        | null    | `true`   |
-| `description` | Metric description                               | `string`        | null    | `true`   |
-| `value`       | Arbitrary value for the metric (used for gauges) | `string|number` | null    | `false`  |
-| `meta`        | Available to be used to hold any misc data.      | `object`        | null    | `false`  |
+| name          | description                                      | type             | default | required |
+| ------------- | ------------------------------------------------ | ---------------- | ------- | -------- |
+| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`         | null    | `true`   |
+| `description` | Metric description                               | `string`         | null    | `true`   |
+| `value`       | Arbitrary value for the metric (used for gauges) | `string\|number` | null    | `false`  |
+| `meta`        | Available to be used to hold any misc data.      | `object`         | null    | `false`  |
 
 **n.b.** In practice, `meta` can be used as a way to label metrics. Use each key of the meta object as the label name and the value as the label value
 
@@ -137,12 +205,12 @@ Starts a metric timer and returns and end function to be called when the measure
 
 **options**
 
-| name          | description                                      | type            | default | required |
-| ------------- | ------------------------------------------------ | --------------- | ------- | -------- |
-| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`        | null    | `true`   |
-| `description` | Metric description                               | `string`        | null    | `true`   |
-| `value`       | Arbitrary value for the metric (used for gauges) | `string|number` | null    | `false`  |
-| `meta`        | Available to be used to hold any misc data       | `object`        | null    | `false`  |
+| name          | description                                      | type             | default | required |
+| ------------- | ------------------------------------------------ | ---------------- | ------- | -------- |
+| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`         | null    | `true`   |
+| `description` | Metric description                               | `string`         | null    | `true`   |
+| `value`       | Arbitrary value for the metric (used for gauges) | `string\|number` | null    | `false`  |
+| `meta`        | Available to be used to hold any misc data       | `object`         | null    | `false`  |
 
 **n.b.** In practice, `meta` can be used as a way to label metrics. Use each key of the meta object as the label name and the value as the label value
 
@@ -160,12 +228,12 @@ Stops a previously started timer, merges timers `options` with end `options` and
 
 **options**
 
-| name          | description                                      | type            | default | required |
-| ------------- | ------------------------------------------------ | --------------- | ------- | -------- |
-| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`        | null    | `true`   |
-| `description` | Metric description                               | `string`        | null    | `true`   |
-| `value`       | Arbitrary value for the metric (used for gauges) | `string|number` | null    | `false`  |
-| `meta`        | Available to be used to hold any misc data       | `object`        | null    | `false`  |
+| name          | description                                      | type             | default | required |
+| ------------- | ------------------------------------------------ | ---------------- | ------- | -------- |
+| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_    | `string`         | null    | `true`   |
+| `description` | Metric description                               | `string`         | null    | `true`   |
+| `value`       | Arbitrary value for the metric (used for gauges) | `string\|number` | null    | `false`  |
+| `meta`        | Available to be used to hold any misc data       | `object`         | null    | `false`  |
 
 **n.b.** In practice, `meta` can be used as a way to label metrics. Use each key of the meta object as the label name and the value as the label value
 
