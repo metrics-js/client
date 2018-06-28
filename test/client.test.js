@@ -1,20 +1,20 @@
 'use strict';
 
-const PodiumMetricsClient = require('../lib/client');
+const MetricsClient = require('../lib/client');
 const getStream = require('get-stream');
 const { promisify } = require('util');
 const delay = promisify(setTimeout);
 
 test('.metric() toStringTag outputs correct tagname', () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
-    expect(client.toString()).toBe('[object PodiumMetrics]');
+    expect(client.toString()).toBe('[object Metrics]');
 });
 
 test('.metric() used to generate and consume a simple counter', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
     client.metric({
         name: 'valid_name',
@@ -35,7 +35,7 @@ test('.metric() used to generate and consume a simple counter', async () => {
 
 test('.timer() used to measure a time interval', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
     const end = client.timer({
         name: 'valid_name',
@@ -54,7 +54,7 @@ test('.timer() used to measure a time interval', async () => {
 
 test('.timer() metric details set at end of timing', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
     const end = client.timer();
     await delay(231);
@@ -73,7 +73,7 @@ test('.timer() metric details set at end of timing', async () => {
 
 test('.timer() correct merging between creating and ending timer', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
     const end = client.timer({
         name: 'testing_meta',
@@ -102,7 +102,7 @@ test('.timer() correct merging between creating and ending timer', async () => {
 
 test('max buffer is respected', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient();
+    const client = new MetricsClient();
 
     for (let i = 0; i < 1000; i++) {
         client.metric({
@@ -122,7 +122,7 @@ test('max buffer is respected', async () => {
 
 test('max buffer preserves latest', async () => {
     expect.hasAssertions();
-    const client = new PodiumMetricsClient({ maxBuffer: 1 });
+    const client = new MetricsClient({ maxBuffer: 1 });
 
     client.metric({ name: 'first', description: '.' });
     client.metric({ name: 'second', description: '.' });
@@ -141,8 +141,8 @@ test('max buffer preserves latest', async () => {
 
 test('combining metrics streams', async () => {
     expect.hasAssertions();
-    const clientA = new PodiumMetricsClient();
-    const clientB = new PodiumMetricsClient();
+    const clientA = new MetricsClient();
+    const clientB = new MetricsClient();
 
     clientA.pipe(clientB);
 
@@ -162,9 +162,9 @@ test('combining metrics streams', async () => {
 
 test('2 - 1 stream piping with delay', async () => {
     expect.hasAssertions();
-    const clientA = new PodiumMetricsClient();
-    const clientB = new PodiumMetricsClient();
-    const clientC = new PodiumMetricsClient();
+    const clientA = new MetricsClient();
+    const clientB = new MetricsClient();
+    const clientC = new MetricsClient();
 
     clientA.pipe(clientC);
     clientB.pipe(clientC);

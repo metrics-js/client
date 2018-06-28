@@ -1,4 +1,4 @@
-# metric-stream
+# @metrics/client
 
 A streaming metric producer. Allows producing counters, gauges, time series in a way that is independent of your metrics system so that you can produce metrics and let consumers decide how to consume them. Additionally, you can pipe together different metrics streams before finally consuming them all in a single location.
 
@@ -11,7 +11,7 @@ The client is intended to be used in the following way:
 Instantiate a new client
 
 ```js
-const client = new MetricStream();
+const client = new Metrics();
 ```
 
 ### Step 2.
@@ -87,18 +87,18 @@ end({ value: 123 });
 
 ## Composing metric streams
 
-One of the goals of `metric-stream` is to allow any number of modules to produce their own metrics, not know about
+One of the goals of `@metrics/client` is to allow any number of modules to produce their own metrics, not know about
 where they might be consumed.
 
-This can be achieved by including and instantiating a `metric-stream` client in each module, using it to create metrics and then exposing the client for consumption elsewhere.
+This can be achieved by including and instantiating a `@metrics/client` client in each module, using it to create metrics and then exposing the client for consumption elsewhere.
 
 _Example_
 
 ```js
 // module-1
 
-const MetricStream = require('metric-stream');
-const client = new MetricStream();
+const Metrics = require('@metrics/client');
+const client = new Metrics();
 
 client.metric({...})
 
@@ -108,8 +108,8 @@ module.exports.metrics = client;
 ```js
 // module-2
 
-const MetricStream = require('metric-stream');
-const client = new MetricStream();
+const Metrics = require('@metrics/client');
+const client = new Metrics();
 
 client.metric({...})
 
@@ -127,7 +127,7 @@ module1.pipe(module2).pipe(consumer);
 
 ## Metrics consumption
 
-In order to consume metrics produced by `metric-stream` you just need to listen for data and use your favourite metrics client to convert our data format into something usable by your system of choice.
+In order to consume metrics produced by `@metrics/client` you just need to listen for data and use your favourite metrics client to convert our data format into something usable by your system of choice.
 
 _Example: Prometheus using prom-client_
 
@@ -155,7 +155,7 @@ class Consumer extends Writable {
 
 ## API
 
-### new MetricStream(options)
+### new Metrics(options)
 
 Creates a new instance of the metrics client.
 
@@ -168,7 +168,7 @@ Creates a new instance of the metrics client.
 _Example_
 
 ```js
-const client = new MetricStream(options);
+const client = new Metrics(options);
 ```
 
 **return**: `Duplex Stream`

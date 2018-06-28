@@ -63,7 +63,7 @@ test('toString outputs a full stringified object', () => {
         description: 'Valid description',
         timestamp: 12345,
     });
-    expect(metric.toString()).toBe('[object PodiumMetricsMetric]');
+    expect(metric.toString()).toBe('[object Metric]');
 });
 
 test('parseInt on metric instance outputs null', () => {

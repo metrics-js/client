@@ -1,8 +1,11 @@
 {
-  "name": "metric-stream",
-  "version": "0.0.0-development",
+  "name": "@metrics/client",
+  "version": "0.0.0",
   "description": "Streaming system independent metric production",
   "main": "lib/client.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "bench": "node benchmark/benchmark.js",
     "test": "jest --coverage",
