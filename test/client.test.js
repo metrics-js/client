@@ -2,8 +2,7 @@
 
 const MetricsClient = require('../lib/client');
 const getStream = require('get-stream');
-const { promisify } = require('util');
-const delay = promisify(setTimeout);
+const lolex = require('lolex');
 
 test('.metric() toStringTag outputs correct tagname', () => {
     expect.hasAssertions();
@@ -35,13 +34,16 @@ test('.metric() used to generate and consume a simple counter', async () => {
 
 test('.timer() used to measure a time interval', async () => {
     expect.hasAssertions();
+
+    const clock = lolex.install();
     const client = new MetricsClient();
 
     const end = client.timer({
         name: 'valid_name',
         description: 'Valid description',
     });
-    await delay(231);
+
+    clock.tick(231);
     end();
 
     client.destroy();
@@ -50,14 +52,18 @@ test('.timer() used to measure a time interval', async () => {
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe('valid_name');
     expect(result[0].time).toBeGreaterThan(0.2);
+
+    clock.uninstall();
 });
 
 test('.timer() metric details set at end of timing', async () => {
     expect.hasAssertions();
+
+    const clock = lolex.install();
     const client = new MetricsClient();
 
     const end = client.timer();
-    await delay(231);
+    clock.tick(231);
     end({
         name: 'valid_name',
         description: 'Valid description',
@@ -69,6 +75,8 @@ test('.timer() metric details set at end of timing', async () => {
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe('valid_name');
     expect(result[0].time).toBeGreaterThan(0.2);
+
+    clock.uninstall();
 });
 
 test('.timer() correct merging between creating and ending timer', async () => {
@@ -162,6 +170,8 @@ test('combining metrics streams', async () => {
 
 test('2 - 1 stream piping with delay', async () => {
     expect.hasAssertions();
+
+    const clock = lolex.install();
     const clientA = new MetricsClient();
     const clientB = new MetricsClient();
     const clientC = new MetricsClient();
@@ -174,7 +184,7 @@ test('2 - 1 stream piping with delay', async () => {
     clientB.metric({ name: 'third', description: '.' });
     clientB.metric({ name: 'fourth', description: '.' });
 
-    await delay(1000);
+    clock.tick(1000);
 
     clientA.metric({ name: 'fifth', description: '.' });
     clientA.metric({ name: 'sixth', description: '.' });
@@ -186,4 +196,6 @@ test('2 - 1 stream piping with delay', async () => {
     expect(results).toHaveLength(6);
     expect(clientA._readableState.buffer).toHaveLength(0);
     expect(clientB._readableState.buffer).toHaveLength(0);
+
+    clock.uninstall();
 });
