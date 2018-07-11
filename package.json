@@ -96,6 +96,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalsadhu/metric-stream.git"
+    "url": "https://github.com/metrics-js/client.git"
   }
 }
