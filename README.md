@@ -20,7 +20,7 @@ Use the client for instrumentation
 
 ```js
 client.metric({
-    name: 'unique_metic_name',
+    name: 'unique_metric_name',
     description: 'Description of metric being collected',
     value: 10,
 });
