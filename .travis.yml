@@ -1,20 +1,53 @@
 language: node_js
-cache:
-  directories:
-    - ~/.npm
-notifications:
-  email: false
+
 node_js:
+  - '11'
   - '10'
-  - '9'
   - '8'
+
 script:
-- npm test
-- npm run lint
-- npm run lint:commit
-after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
-branches:
-  only:
-  - master
-  - /^greenkeeper/.*$/
+  - sudo env "PATH=$PATH" npm test
+
+sudo: enabled
+
+jobs:
+  fast_finish: true
+
+  include:
+
+    # Nightlies
+    - stage: Node.js pre-releases
+      node_js: '12'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly/
+    -
+      node_js: '11'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly/
+    -
+      node_js: '10'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly/
+    -
+      node_js: '8'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly/
+
+    # Release Candidates
+    -
+      node_js: '11'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/rc/
+    -
+      node_js: '10'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/rc/
+    -
+      node_js: '8'
+      if: type = cron
+      env: NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/rc/
+
+
+notifications:
+  email:
+    - post@trygve-lie.com
