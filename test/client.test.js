@@ -23,12 +23,12 @@ const destObjectStream = done => {
     return dStream;
 };
 
-test('.metric() toStringTag outputs correct tagname', () => {
+test('client() - toStringTag outputs correct tagname', () => {
     const client = new MetricsClient();
     expect(client.toString()).toBe('[object Metrics]');
 });
 
-test('.metric() used to generate and consume a simple counter', () => {
+test('client.metric() - used to generate and consume a simple counter', () => {
     const client = new MetricsClient();
     const dest = destObjectStream(result => {
         expect(result).toHaveLength(2);
@@ -50,7 +50,7 @@ test('.metric() used to generate and consume a simple counter', () => {
     client.destroy();
 });
 
-test('.timer() used to measure a time interval', () => {
+test('client.timer() used to measure a time interval', () => {
     const clock = lolex.install();
     const client = new MetricsClient();
     const dest = destObjectStream(result => {
@@ -73,7 +73,7 @@ test('.timer() used to measure a time interval', () => {
     clock.uninstall();
 });
 
-test('.timer() metric details set at end of timing', () => {
+test('client.timer() metric details set at end of timing', () => {
     const clock = lolex.install();
     const client = new MetricsClient();
     const dest = destObjectStream(result => {
@@ -95,7 +95,7 @@ test('.timer() metric details set at end of timing', () => {
     clock.uninstall();
 });
 
-test('.timer() correct merging between creating and ending timer', () => {
+test('client.timer() correct merging between creating and ending timer', () => {
     const client = new MetricsClient();
     const dest = destObjectStream(result => {
         expect(result).toHaveLength(1);
@@ -125,7 +125,7 @@ test('.timer() correct merging between creating and ending timer', () => {
     client.destroy();
 });
 
-test('max buffer is respected', () => {
+test('client.metric() - max buffer is respected', () => {
     const client = new MetricsClient();
     const dest = destObjectStream(result => {
         expect(result).toHaveLength(100);
@@ -149,7 +149,37 @@ test('max buffer is respected', () => {
     client.destroy();
 });
 
-test('max buffer preserves latest', () => {
+test('client.metric() - max buffer is reached - should emit drop event', () => {
+    const dropped = [];
+    const client = new MetricsClient();
+    client.on('drop', (metric) => {
+        dropped.push(metric);
+    });
+
+    const dest = destObjectStream(result => {
+        expect(result).toHaveLength(100);
+        expect(dropped).toHaveLength(4); // 4 because one off
+        expect(client._readableState.buffer).toHaveLength(0);
+    });
+
+    client.pipe(dest);
+
+    // Pause the stream and force buffering
+    dest.cork();
+
+    for (let i = 0; i < 105; i++) {
+        client.metric({
+            name: 'valid_name',
+            description: 'Valid description',
+        });
+    }
+
+    expect(client._readableState.buffer).toHaveLength(100);
+
+    client.destroy();
+});
+
+test('client.metric() - max buffer preserves latest', () => {
     const client = new MetricsClient({ maxBuffer: 1 });
     const dest = destObjectStream(result => {
         expect(result).toHaveLength(1);
@@ -172,7 +202,7 @@ test('max buffer preserves latest', () => {
     client.destroy();
 });
 
-test('combining metrics streams', () => {
+test('client.pipe() - combining metrics streams', () => {
     const clientA = new MetricsClient();
     const clientB = new MetricsClient();
 
@@ -193,7 +223,7 @@ test('combining metrics streams', () => {
     clientA.end();
 });
 
-test('2 - 1 stream piping with delay', () => {
+test('client.pipe() - 2 - 1 stream piping with delay', () => {
     const clock = lolex.install();
     const clientA = new MetricsClient();
     const clientB = new MetricsClient();

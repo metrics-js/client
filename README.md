@@ -246,3 +246,18 @@ const end = client.timer(options);
 // ... thing to be measured
 end(options);
 ```
+
+### instance events
+
+#### drop
+
+Emitted when the client starts dropping metrics. Will emit the dropped metric.
+
+_Example_
+
+```js
+const client = new Metrics();
+client.on('drop', metric => {
+    console.log('dropped metric', metric);
+});
+```
