@@ -152,7 +152,7 @@ test('client.metric() - max buffer is respected', () => {
 test('client.metric() - max buffer is reached - should emit drop event', () => {
     const dropped = [];
     const client = new MetricsClient();
-    client.on('drop', (metric) => {
+    client.on('drop', metric => {
         dropped.push(metric);
     });
 
