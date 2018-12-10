@@ -159,11 +159,15 @@ class Consumer extends Writable {
 
 Creates a new instance of the metrics client.
 
+The Metrics instance inherit from Transform Stream. Due to this the instance also take all
+config parameters which the Transform Stream does. Please see the [documentation of Transform Streams](https://nodejs.org/api/stream.html#stream_duplex_and_transform_streams)
+for further documentation.
+
 **options**
 
 | name        | description                                                         | type     | default |
 | ----------- | ------------------------------------------------------------------- | -------- | ------- |
-| `maxBuffer` | Max number of metrics to retain if not consumed. Keeps most recent. | `number` | 100     |
+| `id`        | A optional unique identifier of the instance of the Object.         | `string` | hash    |
 
 _Example_
 

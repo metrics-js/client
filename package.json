@@ -5,9 +5,10 @@
   "main": "lib/client.js",
   "scripts": {
     "bench": "node benchmark/benchmark.js",
-    "test": "jest --coverage",
-    "lint:format": "eslint --fix .",
-    "lint": "eslint ."
+    "test": "tap test/*.js",
+    "test:coverage": "tap test/*.js --cov",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "Richard Walker <richard.walker@finn.no>",
   "license": "MIT",
@@ -21,21 +22,9 @@
     "eslint-config-finn-prettier": "^3.0.1",
     "eslint-plugin-import": "^2.9.0",
     "benchmark": "^2.1.4",
-    "jest": "^23.6.0",
     "prettier": "^1.11.1",
-    "lolex": "^3.0.0"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "clearMocks": true,
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
+    "lolex": "^3.0.0",
+    "tap": "^12.1.0"
   },
   "prettier": {
     "singleQuote": true,
