@@ -20,34 +20,15 @@
     "time-span": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.10.0",
-    "eslint-config-finn": "^3.0.0",
-    "eslint-config-finn-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "benchmark": "^2.1.4",
     "prettier": "^1.11.1",
     "lolex": "^3.0.0",
     "tap": "^12.1.1"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "tabWidth": 4,
-    "overrides": [
-      {
-        "files": "*.json",
-        "options": {
-          "tabWidth": 2
-        }
-      },
-      {
-        "files": ".eslintrc",
-        "options": {
-          "parser": "json",
-          "tabWidth": 2
-        }
-      }
-    ]
   },
   "repository": {
     "type": "git",

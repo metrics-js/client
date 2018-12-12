@@ -1,8 +1,8 @@
 'use strict';
 
-const Metric = require('../lib/metric');
 const util = require('util');
 const tap = require('tap');
+const Metric = require('../lib/metric');
 
 tap.test('Metric() - object type - should be Metric', t => {
     const metric = new Metric();
@@ -41,7 +41,7 @@ tap.test('stringifying includes all keys', t => {
     });
     t.equal(
         `${metric}`,
-        `Metric {"name":"valid_name","description":"Valid description","timestamp":12345,"value":null,"time":null,"meta":{}}`
+        `Metric {"name":"valid_name","description":"Valid description","timestamp":12345,"value":null,"time":null,"meta":{}}`,
     );
     t.end();
 });

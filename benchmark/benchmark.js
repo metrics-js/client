@@ -1,6 +1,6 @@
 'use strict';
 
-/* eslint no-unused-vars: "off", import/no-extraneous-dependencies: "off" */
+/* eslint no-unused-vars: "off", import/no-extraneous-dependencies: "off", no-console: "off" */
 
 const benchmark = require('benchmark');
 const Metric = require('../lib/metric');
