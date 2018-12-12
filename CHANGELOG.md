@@ -5,6 +5,11 @@ Notable changes to this project.
 The latest version of this document is always available in
 [releases][releases-url].
 
+## [2.1.0] - 2018-12-12
+
+- Removed redudant documentation [#8](https://github.com/metrics-js/client/pull/8)
+- Use airbnb eslint [#9](https://github.com/metrics-js/client/pull/9)
+
 ## [2.0.0] - 2018-12-11
 
  - Updated readable-stream to version [3.x.x](https://github.com/nodejs/readable-stream/tree/v3.0.0#version-3xx).
@@ -18,6 +23,7 @@ The latest version of this document is always available in
 
 - Initial release.
 
+[2.1.0]: https://github.com/metrics-js/client/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/metrics-js/client/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/metrics-js/client/tree/v1.0.0
 
