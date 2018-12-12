@@ -1,9 +1,9 @@
 'use strict';
 
-const MetricsClient = require('../lib/client');
 const stream = require('readable-stream');
 const lolex = require('lolex');
 const tap = require('tap');
+const MetricsClient = require('../lib/client');
 
 const destObjectStream = done => {
     const arr = [];
@@ -66,7 +66,7 @@ tap.test(
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
 
 tap.test('client.timer() used to measure a time interval', t => {
@@ -161,7 +161,7 @@ tap.test(
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
 
 tap.test(
@@ -169,16 +169,17 @@ tap.test(
     t => {
         const client = new MetricsClient();
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 20; i += 1) {
             client.metric({
                 name: 'valid_name',
                 description: 'Valid description',
             });
         }
 
+        // eslint-disable-next-line no-underscore-dangle
         t.equal(client._readableState.buffer.length, 0);
         t.end();
-    }
+    },
 );
 
 tap.test(
@@ -193,6 +194,7 @@ tap.test(
         const dest = destObjectStream(result => {
             t.equal(result.length, 16);
             t.equal(dropped.length, 4);
+            // eslint-disable-next-line no-underscore-dangle
             t.equal(client._readableState.buffer.length, 0);
             t.end();
         });
@@ -203,19 +205,20 @@ tap.test(
         // in the destination stream
         dest.cork();
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 20; i += 1) {
             client.metric({
                 name: 'valid_name',
                 description: 'Valid description',
             });
         }
 
+        // eslint-disable-next-line no-underscore-dangle
         t.equal(client._readableState.buffer.length, 0);
 
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
 
 tap.test(
@@ -228,7 +231,9 @@ tap.test(
             t.equal(result.length, 3);
             t.equal(result[0].name, 'first');
             t.equal(result[2].name, 'third');
+            // eslint-disable-next-line no-underscore-dangle
             t.equal(clientA._readableState.buffer.length, 0);
+            // eslint-disable-next-line no-underscore-dangle
             t.equal(clientB._readableState.buffer.length, 0);
             t.end();
         });
@@ -242,7 +247,7 @@ tap.test(
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
 
 tap.test(
@@ -272,7 +277,7 @@ tap.test(
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
 
 tap.test('client.pipe() - circular pipe - should pipe metrics through', t => {
@@ -341,5 +346,5 @@ tap.test(
         setImmediate(() => {
             dest.end();
         });
-    }
+    },
 );
