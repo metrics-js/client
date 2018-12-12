@@ -27,7 +27,7 @@
     "benchmark": "^2.1.4",
     "prettier": "^1.11.1",
     "lolex": "^3.0.0",
-    "tap": "^12.1.0"
+    "tap": "^12.1.1"
   },
   "prettier": {
     "singleQuote": true,
