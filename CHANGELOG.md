@@ -5,6 +5,10 @@ Notable changes to this project.
 The latest version of this document is always available in
 [releases][releases-url].
 
+## [2.1.1] - 2018-12-17
+
+- Updated readable-stream to version 3.10.0 [#11](https://github.com/metrics-js/client/pull/11)
+
 ## [2.1.0] - 2018-12-12
 
 - Removed redudant documentation [#8](https://github.com/metrics-js/client/pull/8)
@@ -23,6 +27,7 @@ The latest version of this document is always available in
 
 - Initial release.
 
+[2.1.1]: https://github.com/metrics-js/client/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/metrics-js/client/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/metrics-js/client/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/metrics-js/client/tree/v1.0.0
