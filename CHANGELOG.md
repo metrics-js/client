@@ -5,6 +5,11 @@ Notable changes to this project.
 The latest version of this document is always available in
 [releases][releases-url].
 
+## [2.2.0] - 2018-12-27
+
+- Fixed an issue where value was the number `0` would yeld `null` [#14](https://github.com/metrics-js/client/pull/14)
+- Updated readable-stream to version 3.11.0 [#15](https://github.com/metrics-js/client/pull/15)
+
 ## [2.1.1] - 2018-12-17
 
 - Updated readable-stream to version 3.10.0 [#11](https://github.com/metrics-js/client/pull/11)
@@ -27,6 +32,7 @@ The latest version of this document is always available in
 
 - Initial release.
 
+[2.2.0]: https://github.com/metrics-js/client/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/metrics-js/client/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/metrics-js/client/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/metrics-js/client/compare/v1.0.0...v2.0.0
