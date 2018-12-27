@@ -46,7 +46,7 @@ tap.test('stringifying includes all keys', t => {
     t.end();
 });
 
-tap.test('omitting required keys results in undefined instead of null', t => {
+tap.test('omitting required keys results in undefined instead of "null"', t => {
     const metric = new Metric({
         name: 'valid_name',
     });
@@ -58,6 +58,38 @@ tap.test('omitting required keys results in undefined instead of null', t => {
     t.same(metric.meta, {});
     t.end();
 });
+
+tap.test('the number 0 is treated as a number and does not yeld "null"', t => {
+    const metric = new Metric({
+        name: 'valid_name',
+        value: 0,
+        timestamp: 0,
+    });
+    t.equal(metric.timestamp, 0);
+    t.equal(metric.value, 0);
+    t.end();
+});
+
+tap.test('empty string value is treated as "null"', t => {
+    const metric = new Metric({
+        name: 'valid_name',
+        value: '',
+    });
+    t.equal(metric.value, null);
+    t.end();
+});
+
+tap.test(
+    'empty string value, consist of multiple whitespaces, is treated as "null"',
+    t => {
+        const metric = new Metric({
+            name: 'valid_name',
+            value: '   ',
+        });
+        t.equal(metric.value, null);
+        t.end();
+    },
+);
 
 tap.test('util.inspect includes all keys', t => {
     const metric = new Metric({
