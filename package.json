@@ -15,7 +15,15 @@
   },
   "author": "Richard Walker <richard.walker@finn.no>",
   "license": "MIT",
+  "keywords": [
+    "server-statistics",
+    "server-stats",
+    "statistics",
+    "metrics",
+    "monitoring"
+  ],
   "dependencies": {
+    "@metrics/metric": "^1.0.0",
     "readable-stream": "^3.1.1",
     "time-span": "^2.0.0"
   },
