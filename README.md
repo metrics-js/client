@@ -1,5 +1,7 @@
 # @metrics/client
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/metrics-js/client.svg)](https://greenkeeper.io/)
+
 A streaming metric producer. Allows producing counters, gauges, time series in a way that is independent of your metrics system so that you can produce metrics and let consumers decide how to consume them. Additionally, you can pipe together different metrics streams before finally consuming them all in a single location.
 
 ## Quick start
