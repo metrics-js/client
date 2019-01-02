@@ -23,9 +23,9 @@ const destObjectStream = done => {
     return dStream;
 };
 
-tap.test('client() - object type - should be Metrics', t => {
+tap.test('client() - object type - should be MetricsClient', t => {
     const client = new MetricsClient();
-    t.equal(Object.prototype.toString.call(client), '[object Metrics]');
+    t.equal(Object.prototype.toString.call(client), '[object MetricsClient]');
     t.end();
 });
 
