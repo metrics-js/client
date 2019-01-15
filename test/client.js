@@ -348,3 +348,77 @@ tap.test(
         });
     },
 );
+
+tap.test('client.Counter() - class includes metrics client property', t => {
+    const client = new MetricsClient();
+    const counter = new client.Counter();
+    t.true(counter.client instanceof MetricsClient);
+    t.end();
+});
+
+tap.test('client.Gauge() - class includes metrics client property', t => {
+    const client = new MetricsClient();
+    const gauge = new client.Gauge();
+    t.true(gauge.client instanceof MetricsClient);
+    t.end();
+});
+
+tap.test('client.Counter() and client.Gauge() - share the same client', t => {
+    const client = new MetricsClient();
+    const gauge = new client.Gauge();
+    const counter = new client.Counter();
+    t.equal(gauge.client, counter.client);
+    t.end();
+});
+
+tap.test(
+    'client.Counter() - class instance used to generate and consume a simple counter',
+    t => {
+        const client = new MetricsClient();
+        const counter = new client.Counter({
+            name: 'valid_name',
+            description: 'Valid description',
+        });
+        const dest = destObjectStream(result => {
+            t.equal(result.length, 2);
+            t.equal(result[0].name, 'valid_name');
+            t.end();
+        });
+
+        client.pipe(dest);
+
+        counter.inc();
+        counter.inc();
+
+        setImmediate(() => {
+            dest.end();
+        });
+    },
+);
+
+tap.test(
+    'client.Gauge() - class instance used to generate and consume a simple gauge',
+    t => {
+        const client = new MetricsClient();
+        const gauge = new client.Gauge({
+            name: 'valid_name',
+            description: 'Valid description',
+        });
+        const dest = destObjectStream(result => {
+            t.equal(result.length, 2);
+            t.equal(result[0].name, 'valid_name');
+            t.equal(result[0].value, 20);
+            t.equal(result[1].value, 14);
+            t.end();
+        });
+
+        client.pipe(dest);
+
+        gauge.set(20);
+        gauge.set(14);
+
+        setImmediate(() => {
+            dest.end();
+        });
+    },
+);
