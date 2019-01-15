@@ -349,33 +349,45 @@ tap.test(
     },
 );
 
-tap.test('client.Counter() - class includes metrics client property', t => {
+tap.test('client.counter() - class includes metrics client property', t => {
     const client = new MetricsClient();
-    const counter = new client.Counter();
+    const counter = client.counter({
+        name: 'valid_name',
+        description: 'Valid description',
+    });
     t.true(counter.client instanceof MetricsClient);
     t.end();
 });
 
-tap.test('client.Gauge() - class includes metrics client property', t => {
+tap.test('client.gauge() - class includes metrics client property', t => {
     const client = new MetricsClient();
-    const gauge = new client.Gauge();
+    const gauge = client.gauge({
+        name: 'valid_name',
+        description: 'Valid description',
+    });
     t.true(gauge.client instanceof MetricsClient);
     t.end();
 });
 
-tap.test('client.Counter() and client.Gauge() - share the same client', t => {
+tap.test('client.counter() and client.gauge() - share the same client', t => {
     const client = new MetricsClient();
-    const gauge = new client.Gauge();
-    const counter = new client.Counter();
+    const gauge = client.gauge({
+        name: 'valid_name',
+        description: 'Valid description',
+    });
+    const counter = client.counter({
+        name: 'valid_name',
+        description: 'Valid description',
+    });
     t.equal(gauge.client, counter.client);
     t.end();
 });
 
 tap.test(
-    'client.Counter() - class instance used to generate and consume a simple counter',
+    'client.counter() - class instance used to generate and consume a simple counter',
     t => {
         const client = new MetricsClient();
-        const counter = new client.Counter({
+        const counter = client.counter({
             name: 'valid_name',
             description: 'Valid description',
         });
@@ -397,10 +409,10 @@ tap.test(
 );
 
 tap.test(
-    'client.Gauge() - class instance used to generate and consume a simple gauge',
+    'client.gauge() - class instance used to generate and consume a simple gauge',
     t => {
         const client = new MetricsClient();
-        const gauge = new client.Gauge({
+        const gauge = client.gauge({
             name: 'valid_name',
             description: 'Valid description',
         });
