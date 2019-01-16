@@ -349,40 +349,6 @@ tap.test(
     },
 );
 
-tap.test('client.counter() - class includes metrics client property', t => {
-    const client = new MetricsClient();
-    const counter = client.counter({
-        name: 'valid_name',
-        description: 'Valid description',
-    });
-    t.true(counter.client instanceof MetricsClient);
-    t.end();
-});
-
-tap.test('client.gauge() - class includes metrics client property', t => {
-    const client = new MetricsClient();
-    const gauge = client.gauge({
-        name: 'valid_name',
-        description: 'Valid description',
-    });
-    t.true(gauge.client instanceof MetricsClient);
-    t.end();
-});
-
-tap.test('client.counter() and client.gauge() - share the same client', t => {
-    const client = new MetricsClient();
-    const gauge = client.gauge({
-        name: 'valid_name',
-        description: 'Valid description',
-    });
-    const counter = client.counter({
-        name: 'valid_name',
-        description: 'Valid description',
-    });
-    t.equal(gauge.client, counter.client);
-    t.end();
-});
-
 tap.test(
     'client.counter() - class instance used to generate and consume a simple counter',
     t => {
