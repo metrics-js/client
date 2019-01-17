@@ -9,44 +9,6 @@ tap.test('counter() - creating a basic counter without options throws', t => {
 });
 
 tap.test(
-    'counter() - creating a basic counter without options.name throws',
-    t => {
-        t.throws(() => new Counter({}));
-        t.end();
-    },
-);
-
-tap.test(
-    'counter() - creating a basic counter with empty options.name throws',
-    t => {
-        t.throws(() => new Counter({ name: '' }));
-        t.end();
-    },
-);
-
-tap.test(
-    'counter() - creating a basic counter with invalid options.name throws',
-    t => {
-        t.throws(
-            () =>
-                new Counter({
-                    name: 'this is invalid',
-                    description: 'this is valid',
-                }),
-        );
-        t.end();
-    },
-);
-
-tap.test(
-    'counter() - creating a basic counter with empty options.description throws',
-    t => {
-        t.throws(() => new Counter({ name: 'valid_name' }));
-        t.end();
-    },
-);
-
-tap.test(
     'counter().inc() - calling inc with no argument results in a 1 being set',
     t => {
         const counter = new Counter({
@@ -55,13 +17,12 @@ tap.test(
         });
 
         counter.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 2,
-                value: 1,
-                labels: [],
-            });
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, []);
+            t.same(metric.meta, {});
             t.end();
         });
 
@@ -76,13 +37,12 @@ tap.test('counter().inc() - calling inc with a value', t => {
     });
 
     counter.on('metric', metric => {
-        t.same(metric, {
-            name: 'valid_name',
-            description: 'Valid description',
-            type: 2,
-            value: 101,
-            labels: [],
-        });
+        t.equal(metric.name, 'valid_name');
+        t.equal(metric.description, 'Valid description');
+        t.equal(metric.type, 2);
+        t.equal(metric.value, 101);
+        t.same(metric.labels, []);
+        t.same(metric.meta, {});
         t.end();
     });
 
@@ -96,46 +56,44 @@ tap.test('counter() - creating a basic counter with minimal arguments', t => {
     });
 
     counter.on('metric', metric => {
-        t.same(metric, {
-            name: 'valid_name',
-            description: 'Valid description',
-            type: 2,
-            value: 1,
-            labels: [],
-        });
+        t.equal(metric.name, 'valid_name');
+        t.equal(metric.description, 'Valid description');
+        t.equal(metric.type, 2);
+        t.equal(metric.value, 1);
+        t.same(metric.labels, []);
+        t.same(metric.meta, {});
         t.end();
     });
 
     counter.inc();
 });
 
-tap.test(
-    'counter() - creating a counter with labels and then not populating them',
-    t => {
-        const counter = new Counter({
-            name: 'valid_name',
-            description: 'Valid description',
-            labels: ['first', 'second', 'third'],
-        });
+// tap.test(
+//     'counter() - creating a counter with labels and then not populating them',
+//     t => {
+//         const counter = new Counter({
+//             name: 'valid_name',
+//             description: 'Valid description',
+//             labels: ['first', 'second', 'third'],
+//         });
 
-        counter.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 2,
-                value: 1,
-                labels: [
-                    { name: 'first', value: undefined },
-                    { name: 'second', value: undefined },
-                    { name: 'third', value: undefined },
-                ],
-            });
-            t.end();
-        });
+//         counter.on('metric', metric => {
+//             t.equal(metric.name, 'valid_name');
+//             t.equal(metric.description, 'Valid description');
+//             t.equal(metric.type, 2);
+//             t.equal(metric.value, 1);
+//             t.same(metric.labels, [
+//                 { name: 'first', value: undefined },
+//                 { name: 'second', value: undefined },
+//                 { name: 'third', value: undefined },
+//             ]);
+//             t.same(metric.meta, {});
+//             t.end();
+//         });
 
-        counter.inc();
-    },
-);
+//         counter.inc();
+//     },
+// );
 
 tap.test(
     'counter() - creating a counter with labels and then populating them',
@@ -147,17 +105,16 @@ tap.test(
         });
 
         counter.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 2,
-                value: 101,
-                labels: [
-                    { name: 'first', value: 'this is first' },
-                    { name: 'second', value: 'this is second' },
-                    { name: 'third', value: 'this is third' },
-                ],
-            });
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 101);
+            t.same(metric.labels, [
+                { name: 'first', value: 'this is first' },
+                { name: 'second', value: 'this is second' },
+                { name: 'third', value: 'this is third' },
+            ]);
+            t.same(metric.meta, {});
             t.end();
         });
 
@@ -175,17 +132,16 @@ tap.test(
         });
 
         counter.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 2,
-                value: 1,
-                labels: [
-                    { name: 'first', value: 'this is first' },
-                    { name: 'second', value: 'this is second' },
-                    { name: 'third', value: 'this is third' },
-                ],
-            });
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, [
+                { name: 'first', value: 'this is first' },
+                { name: 'second', value: 'this is second' },
+                { name: 'third', value: 'this is third' },
+            ]);
+            t.same(metric.meta, {});
             t.end();
         });
 

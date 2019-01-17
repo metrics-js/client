@@ -76,7 +76,7 @@ tap.test('client.timer() used to measure a time interval', t => {
     const dest = destObjectStream(result => {
         t.equal(result.length, 1);
         t.equal(result[0].name, 'valid_name');
-        t.true(result[0].time > 0.2 && result[0].time < 0.3);
+        t.true(result[0].value > 0.2 && result[0].value < 0.3);
         t.end();
     });
 
@@ -105,7 +105,7 @@ tap.test('client.timer() metric details set at end of timing', t => {
     const dest = destObjectStream(result => {
         t.equal(result.length, 1);
         t.equal(result[0].name, 'valid_name');
-        t.true(result[0].time > 0.2 && result[0].time < 0.3);
+        t.true(result[0].value > 0.2 && result[0].value < 0.3);
         t.end();
     });
 
