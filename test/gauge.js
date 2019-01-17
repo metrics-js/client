@@ -8,41 +8,6 @@ tap.test('gauge() - creating a basic gauge without options throws', t => {
     t.end();
 });
 
-tap.test('gauge() - creating a basic gauge without options.name throws', t => {
-    t.throws(() => new Gauge({}));
-    t.end();
-});
-
-tap.test(
-    'gauge() - creating a basic gauge with empty options.name throws',
-    t => {
-        t.throws(() => new Gauge({ name: '' }));
-        t.end();
-    },
-);
-
-tap.test(
-    'gauge() - creating a basic gauge with invalid options.name throws',
-    t => {
-        t.throws(
-            () =>
-                new Gauge({
-                    name: 'this is invalid',
-                    description: 'this is valid',
-                }),
-        );
-        t.end();
-    },
-);
-
-tap.test(
-    'gauge() - creating a basic gauge with empty options.description throws',
-    t => {
-        t.throws(() => new Gauge({ name: 'valid_name' }));
-        t.end();
-    },
-);
-
 tap.test('gauge().set() - calling set with no argument throws', t => {
     const gauge = new Gauge({
         name: 'valid_name',
@@ -59,46 +24,45 @@ tap.test('gauge() - creating a basic gauge with minimal arguments', t => {
     });
 
     gauge.on('metric', metric => {
-        t.same(metric, {
-            name: 'valid_name',
-            description: 'Valid description',
-            type: 1,
-            value: 1,
-            labels: [],
-        });
+        t.equal(metric.name, 'valid_name');
+        t.equal(metric.description, 'Valid description');
+        t.equal(metric.type, 1);
+        t.equal(metric.value, 1);
+        t.same(metric.labels, []);
+        t.same(metric.meta, {});
         t.end();
     });
 
     gauge.set(1);
 });
 
-tap.test(
-    'gauge() - creating a gauge with labels and then not populating them',
-    t => {
-        const gauge = new Gauge({
-            name: 'valid_name',
-            description: 'Valid description',
-            labels: ['first', 'second', 'third'],
-        });
+// tap.test(
+//     'gauge() - creating a gauge with labels and then not populating them',
+//     t => {
+//         const gauge = new Gauge({
+//             name: 'valid_name',
+//             description: 'Valid description',
+//             labels: ['first', 'second', 'third'],
+//         });
 
-        gauge.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 1,
-                value: 1,
-                labels: [
-                    { name: 'first', value: undefined },
-                    { name: 'second', value: undefined },
-                    { name: 'third', value: undefined },
-                ],
-            });
-            t.end();
-        });
+//         gauge.on('metric', metric => {
+//             t.same(metric, {
+//                 name: 'valid_name',
+//                 description: 'Valid description',
+//                 type: 1,
+//                 value: 1,
+//                 labels: [
+//                     { name: 'first', value: undefined },
+//                     { name: 'second', value: undefined },
+//                     { name: 'third', value: undefined },
+//                 ],
+//             });
+//             t.end();
+//         });
 
-        gauge.set(1);
-    },
-);
+//         gauge.set(1);
+//     },
+// );
 
 tap.test(
     'gauge() - creating a gauge with labels and then populating them',
@@ -110,17 +74,16 @@ tap.test(
         });
 
         gauge.on('metric', metric => {
-            t.same(metric, {
-                name: 'valid_name',
-                description: 'Valid description',
-                type: 1,
-                value: 1,
-                labels: [
-                    { name: 'first', value: 'this is first' },
-                    { name: 'second', value: 'this is second' },
-                    { name: 'third', value: 'this is third' },
-                ],
-            });
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 1);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, [
+                { name: 'first', value: 'this is first' },
+                { name: 'second', value: 'this is second' },
+                { name: 'third', value: 'this is third' },
+            ]);
+            t.same(metric.meta, {});
             t.end();
         });
 
