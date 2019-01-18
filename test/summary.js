@@ -240,3 +240,25 @@ tap.test(
         clock.uninstall();
     },
 );
+
+tap.test('summary() - buckets option', t => {
+    const summary = new Summary({
+        name: 'valid_name',
+        description: 'Valid description',
+        quantiles: [0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999],
+    });
+
+    summary.on('metric', metric => {
+        t.equal(metric.name, 'valid_name');
+        t.equal(metric.description, 'Valid description');
+        t.equal(metric.type, 7);
+        t.equal(metric.value, 1);
+        t.same(metric.labels, []);
+        t.same(metric.meta, {
+            quantiles: [0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999],
+        });
+        t.end();
+    });
+
+    summary.observe(1);
+});

@@ -249,3 +249,23 @@ tap.test(
         clock.uninstall();
     },
 );
+
+tap.test('histogram() - buckets option', t => {
+    const histogram = new Histogram({
+        name: 'valid_name',
+        description: 'Valid description',
+        buckets: [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+    });
+
+    histogram.on('metric', metric => {
+        t.equal(metric.name, 'valid_name');
+        t.equal(metric.description, 'Valid description');
+        t.equal(metric.type, 5);
+        t.equal(metric.value, 1);
+        t.same(metric.labels, []);
+        t.same(metric.meta, { buckets: [0.001, 0.01, 0.1, 1, 10, 100, 1000] });
+        t.end();
+    });
+
+    histogram.observe(1);
+});
