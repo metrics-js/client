@@ -96,6 +96,38 @@ tap.test(
 );
 
 tap.test(
+    'counter() - creating a counter without labels and then populating them in the inc method',
+    t => {
+        const counter = new Counter({
+            name: 'valid_name',
+            description: 'Valid description',
+        });
+
+        counter.on('metric', metric => {
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, [
+                { name: 'first', value: 'this is first' },
+                { name: 'second', value: 'this is second' },
+                { name: 'third', value: 'this is third' },
+            ]);
+            t.same(metric.meta, {});
+            t.end();
+        });
+
+        counter.inc({
+            labels: {
+                first: 'this is first',
+                second: 'this is second',
+                third: 'this is third',
+            },
+        });
+    },
+);
+
+tap.test(
     'counter() - creating a counter with labels and then populating them',
     t => {
         const counter = new Counter({
@@ -121,6 +153,38 @@ tap.test(
         counter.inc(101, {
             labels: {
                 first: 'this is first',
+                second: 'this is second',
+                third: 'this is third',
+            },
+        });
+    },
+);
+
+tap.test(
+    'counter() - creating a counter with some labels and then populating them with others in the inc method (merging)',
+    t => {
+        const counter = new Counter({
+            name: 'valid_name',
+            description: 'Valid description',
+            labels: { first: 'this is first' },
+        });
+
+        counter.on('metric', metric => {
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, [
+                { name: 'first', value: 'this is first' },
+                { name: 'second', value: 'this is second' },
+                { name: 'third', value: 'this is third' },
+            ]);
+            t.same(metric.meta, {});
+            t.end();
+        });
+
+        counter.inc({
+            labels: {
                 second: 'this is second',
                 third: 'this is third',
             },
