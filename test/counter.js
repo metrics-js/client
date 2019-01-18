@@ -68,32 +68,32 @@ tap.test('counter() - creating a basic counter with minimal arguments', t => {
     counter.inc();
 });
 
-// tap.test(
-//     'counter() - creating a counter with labels and then not populating them',
-//     t => {
-//         const counter = new Counter({
-//             name: 'valid_name',
-//             description: 'Valid description',
-//             labels: ['first', 'second', 'third'],
-//         });
+tap.test(
+    'counter() - creating a counter with labels and then not populating them',
+    t => {
+        const counter = new Counter({
+            name: 'valid_name',
+            description: 'Valid description',
+            labels: { first: undefined, second: undefined, third: undefined },
+        });
 
-//         counter.on('metric', metric => {
-//             t.equal(metric.name, 'valid_name');
-//             t.equal(metric.description, 'Valid description');
-//             t.equal(metric.type, 2);
-//             t.equal(metric.value, 1);
-//             t.same(metric.labels, [
-//                 { name: 'first', value: undefined },
-//                 { name: 'second', value: undefined },
-//                 { name: 'third', value: undefined },
-//             ]);
-//             t.same(metric.meta, {});
-//             t.end();
-//         });
+        counter.on('metric', metric => {
+            t.equal(metric.name, 'valid_name');
+            t.equal(metric.description, 'Valid description');
+            t.equal(metric.type, 2);
+            t.equal(metric.value, 1);
+            t.same(metric.labels, [
+                { name: 'first', value: undefined },
+                { name: 'second', value: undefined },
+                { name: 'third', value: undefined },
+            ]);
+            t.same(metric.meta, {});
+            t.end();
+        });
 
-//         counter.inc();
-//     },
-// );
+        counter.inc();
+    },
+);
 
 tap.test(
     'counter() - creating a counter with labels and then populating them',
@@ -101,7 +101,7 @@ tap.test(
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
-            labels: ['first', 'second', 'third'],
+            labels: { first: null, second: null, third: null },
         });
 
         counter.on('metric', metric => {
@@ -118,7 +118,13 @@ tap.test(
             t.end();
         });
 
-        counter.inc(101, 'this is first', 'this is second', 'this is third');
+        counter.inc(101, {
+            labels: {
+                first: 'this is first',
+                second: 'this is second',
+                third: 'this is third',
+            },
+        });
     },
 );
 
@@ -128,7 +134,7 @@ tap.test(
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
-            labels: ['first', 'second', 'third'],
+            labels: { first: null, second: null, third: null },
         });
 
         counter.on('metric', metric => {
@@ -145,6 +151,12 @@ tap.test(
             t.end();
         });
 
-        counter.inc('this is first', 'this is second', 'this is third');
+        counter.inc({
+            labels: {
+                first: 'this is first',
+                second: 'this is second',
+                third: 'this is third',
+            },
+        });
     },
 );

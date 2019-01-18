@@ -23,7 +23,7 @@
     "monitoring"
   ],
   "dependencies": {
-    "@metrics/metric": "^2.2.0",
+    "@metrics/metric": "^2.3.0",
     "readable-stream": "^3.1.1",
     "time-span": "^2.0.0"
   },
