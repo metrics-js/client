@@ -13,6 +13,8 @@ The client is intended to be used in the following way:
 Instantiate a new client
 
 ```js
+const Metrics = require('@metrics/client');
+
 const client = new Metrics();
 ```
 
