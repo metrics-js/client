@@ -22,7 +22,7 @@ const destObjectStream = done => {
 
     return dStream;
 };
-
+/*
 tap.test('client() - object type - should be MetricsClient', t => {
     const client = new MetricsClient();
     t.equal(Object.prototype.toString.call(client), '[object MetricsClient]');
@@ -394,6 +394,87 @@ tap.test(
 
         gauge.set(20);
         gauge.set(14);
+
+        setImmediate(() => {
+            dest.end();
+        });
+    },
+);
+*/
+
+
+tap.test(
+    'client.pipe() - exceed the default, 10, number of max event listeners - should not cause the process to emit a MaxListenersExceededWarning',
+    t => {
+        const clientA = new MetricsClient();
+        const clientB = new MetricsClient();
+        const clientC = new MetricsClient();
+        const clientD = new MetricsClient();
+        const clientE = new MetricsClient();
+        const clientF = new MetricsClient();
+        const clientG = new MetricsClient();
+        const clientH = new MetricsClient();
+        const clientI = new MetricsClient();
+        const clientJ = new MetricsClient();
+        const clientK = new MetricsClient();
+        const clientL = new MetricsClient();
+        const clientM = new MetricsClient();
+        const clientN = new MetricsClient();
+
+        const clientX = new MetricsClient();
+
+        process.on('warning', () => {
+            t.fail();
+        });
+
+        const dest = destObjectStream(result => {
+            t.equal(result.length, 14);
+            t.end();
+        });
+
+        clientA.on('error', (error) => {console.log('a error', error)});
+        clientB.on('error', (error) => {console.log('b error', error)});
+        clientC.on('error', (error) => {console.log('c error', error)});
+        clientD.on('error', (error) => {console.log('d error', error)});
+        clientE.on('error', (error) => {console.log('e error', error)});
+        clientF.on('error', (error) => {console.log('f error', error)});
+        clientG.on('error', (error) => {console.log('g error', error)});
+        clientH.on('error', (error) => {console.log('h error', error)});
+        clientI.on('error', (error) => {console.log('i error', error)});
+        clientJ.on('error', (error) => {console.log('j error', error)});
+        clientK.on('error', (error) => {console.log('k error', error)});
+        clientL.on('error', (error) => {console.log('l error', error)});
+        clientM.on('error', (error) => {console.log('m error', error)});
+        clientN.on('error', (error) => {console.log('n error', error)});
+        clientX.on('error', (error) => {console.log('x error', error)});
+
+        clientA.pipe(clientX);
+        clientB.pipe(clientX);
+        clientC.pipe(clientX);
+        clientD.pipe(clientX);
+        clientE.pipe(clientX);
+        clientF.pipe(clientX);
+        clientG.pipe(clientH).pipe(clientI).pipe(clientJ).pipe(clientX);
+        clientK.pipe(clientX);
+        clientL.pipe(clientM).pipe(clientX);
+        clientN.pipe(clientX);
+
+        clientX.pipe(dest);
+
+        clientA.metric({ name: 'a_test', description: '.' });
+        clientB.metric({ name: 'b_test', description: '.' });
+        clientC.metric({ name: 'c_test', description: '.' });
+        clientD.metric({ name: 'd_test', description: '.' });
+        clientE.metric({ name: 'e_test', description: '.' });
+        clientF.metric({ name: 'f_test', description: '.' });
+        clientG.metric({ name: 'g_test', description: '.' });
+        clientH.metric({ name: 'h_test', description: '.' });
+        clientI.metric({ name: 'i_test', description: '.' });
+        clientJ.metric({ name: 'j_test', description: '.' });
+        clientK.metric({ name: 'k_test', description: '.' });
+        clientL.metric({ name: 'l_test', description: '.' });
+        clientM.metric({ name: 'm_test', description: '.' });
+        clientN.metric({ name: 'n_test', description: '.' });
 
         setImmediate(() => {
             dest.end();
