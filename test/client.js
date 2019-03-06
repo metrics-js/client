@@ -22,7 +22,7 @@ const destObjectStream = done => {
 
     return dStream;
 };
-/*
+
 tap.test('client() - object type - should be MetricsClient', t => {
     const client = new MetricsClient();
     t.equal(Object.prototype.toString.call(client), '[object MetricsClient]');
@@ -400,8 +400,6 @@ tap.test(
         });
     },
 );
-*/
-
 
 tap.test(
     'client.pipe() - exceed the default, 10, number of max event listeners - should not cause the process to emit a MaxListenersExceededWarning',
@@ -423,8 +421,10 @@ tap.test(
 
         const clientX = new MetricsClient();
 
-        process.on('warning', () => {
-            t.fail();
+        process.on('warning', (warning) => {
+            if (warning.name === 'MaxListenersExceededWarning') {
+                t.fail();
+            }
         });
 
         const dest = destObjectStream(result => {
