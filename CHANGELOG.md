@@ -5,6 +5,12 @@ Notable changes to this project.
 The latest version of this document is always available in
 [releases][releases-url].
 
+## [unreleased]
+
+## [2.3.1] - 2019-02-07
+
+-   Updated @metrics/metric to version 2.3.1
+
 ## [2.3.0] - 2019-01-21
 
 -   Added Counter, Gauge, Summary and Histogram classes
@@ -37,6 +43,8 @@ The latest version of this document is always available in
 
 -   Initial release.
 
+[unreleased]: https://github.com/metrics-js/client/compare/v2.3.1...HEAD
+[2.3.1]: https://github.com/metrics-js/client/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/metrics-js/client/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/metrics-js/client/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/metrics-js/client/compare/v2.1.0...v2.1.1
