@@ -1,6 +1,6 @@
 {
   "name": "@metrics/client",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "Streaming system independent metric production",
   "main": "lib/client.js",
   "files": [
