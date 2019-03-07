@@ -7,6 +7,13 @@ The latest version of this document is always available in
 
 ## [unreleased]
 
+## [2.4.0] - 2019-03-07
+
+-   Remove redundant (and wrongly) set of source property - [#24](https://github.com/metrics-js/client/pull/24)
+-   Guard against MaxListenersExceededWarning when large amount of streams is piped - [#23](https://github.com/metrics-js/client/pull/23)
+-   Updated dependencies - [#22](https://github.com/metrics-js/client/pull/22)
+-   Fix code example in documentation - [#21](https://github.com/metrics-js/client/pull/21)
+
 ## [2.3.1] - 2019-02-07
 
 -   Updated @metrics/metric to version 2.3.1
@@ -43,7 +50,8 @@ The latest version of this document is always available in
 
 -   Initial release.
 
-[unreleased]: https://github.com/metrics-js/client/compare/v2.3.1...HEAD
+[unreleased]: https://github.com/metrics-js/client/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/metrics-js/client/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/metrics-js/client/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/metrics-js/client/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/metrics-js/client/compare/v2.1.1...v2.2.0
