@@ -7,6 +7,10 @@ The latest version of this document is always available in
 
 ## [unreleased]
 
+## [2.4.1] - 2019-03-08
+
+-   Updated time-span dependency - [#25](https://github.com/metrics-js/client/pull/25)
+
 ## [2.4.0] - 2019-03-07
 
 -   Remove redundant (and wrongly) set of source property - [#24](https://github.com/metrics-js/client/pull/24)
@@ -50,7 +54,8 @@ The latest version of this document is always available in
 
 -   Initial release.
 
-[unreleased]: https://github.com/metrics-js/client/compare/v2.4.0...HEAD
+[unreleased]: https://github.com/metrics-js/client/compare/v2.4.1...HEAD
+[2.4.1]: https://github.com/metrics-js/client/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/metrics-js/client/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/metrics-js/client/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/metrics-js/client/compare/v2.2.0...v2.3.0
