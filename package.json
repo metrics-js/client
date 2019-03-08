@@ -25,7 +25,7 @@
   "dependencies": {
     "@metrics/metric": "^2.3.1",
     "readable-stream": "^3.2.0",
-    "time-span": "^2.0.0"
+    "time-span": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^5.15.1",
