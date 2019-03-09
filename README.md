@@ -1,6 +1,11 @@
 # @metrics/client
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/metrics-js/client.svg)](https://greenkeeper.io/)
+A streaming metric producer. Allows producing counters, gauges, histograms and summaries in a way that is independent of your metrics system.
+
+[![Dependencies](https://img.shields.io/david/metrics-js/client.svg?style=flat-square)](https://david-dm.org/metrics-js/client)
+[![Build Status](http://img.shields.io/travis/metrics-js/client/master.svg?style=flat-square)](https://travis-ci.org/metrics-js/client)
+[![Greenkeeper badge](https://badges.greenkeeper.io/metrics-js/client.svg?style=flat-square)](https://greenkeeper.io/)
+[![Known Vulnerabilities](https://snyk.io/test/github/metrics-js/client/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/metrics-js/client?targetFile=package.json)
 
 A streaming metric producer. Allows producing counters, gauges, time series in a way that is independent of your metrics system so that you can produce metrics and let consumers decide how to consume them. Additionally, you can pipe together different metrics streams before finally consuming them all in a single location.
 
