@@ -5,8 +5,16 @@ node_js:
   - '10'
   - '8'
 
+os:
+  - linux
+  - osx
+  - windows
+
+install:
+  - npm install --ignore-scripts
+
 script:
-  - sudo env "PATH=$PATH" npm test
+  - npm test
 
 sudo: enabled
 
