@@ -1,7 +1,7 @@
 {
   "name": "@metrics/client",
   "version": "2.4.1",
-  "description": "Streaming system independent metric production",
+  "description": "A streaming metric producer. Allows producing counters, gauges, histograms and summaries in a way that is independent of your metrics system.",
   "main": "lib/client.js",
   "files": [
     "lib"
