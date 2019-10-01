@@ -28,15 +28,15 @@
     "time-span": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.15.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-prettier": "^3.0.1",
+    "eslint": "^6.5.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "benchmark": "^2.1.4",
-    "prettier": "^1.16.4",
-    "lolex": "^4.0.1",
-    "tap": "^12.6.0"
+    "prettier": "^1.18.2",
+    "lolex": "^4.2.0",
+    "tap": "^14.6.9"
   },
   "repository": {
     "type": "git",
