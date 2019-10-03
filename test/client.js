@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable no-console */
+
 const stream = require('readable-stream');
 const lolex = require('lolex');
 const tap = require('tap');
@@ -421,7 +423,7 @@ tap.test(
 
         const clientX = new MetricsClient();
 
-        process.on('warning', (warning) => {
+        process.on('warning', warning => {
             if (warning.name === 'MaxListenersExceededWarning') {
                 t.fail();
             }
@@ -432,21 +434,51 @@ tap.test(
             t.end();
         });
 
-        clientA.on('error', (error) => {console.log('a error', error)});
-        clientB.on('error', (error) => {console.log('b error', error)});
-        clientC.on('error', (error) => {console.log('c error', error)});
-        clientD.on('error', (error) => {console.log('d error', error)});
-        clientE.on('error', (error) => {console.log('e error', error)});
-        clientF.on('error', (error) => {console.log('f error', error)});
-        clientG.on('error', (error) => {console.log('g error', error)});
-        clientH.on('error', (error) => {console.log('h error', error)});
-        clientI.on('error', (error) => {console.log('i error', error)});
-        clientJ.on('error', (error) => {console.log('j error', error)});
-        clientK.on('error', (error) => {console.log('k error', error)});
-        clientL.on('error', (error) => {console.log('l error', error)});
-        clientM.on('error', (error) => {console.log('m error', error)});
-        clientN.on('error', (error) => {console.log('n error', error)});
-        clientX.on('error', (error) => {console.log('x error', error)});
+        clientA.on('error', error => {
+            console.log('a error', error);
+        });
+        clientB.on('error', error => {
+            console.log('b error', error);
+        });
+        clientC.on('error', error => {
+            console.log('c error', error);
+        });
+        clientD.on('error', error => {
+            console.log('d error', error);
+        });
+        clientE.on('error', error => {
+            console.log('e error', error);
+        });
+        clientF.on('error', error => {
+            console.log('f error', error);
+        });
+        clientG.on('error', error => {
+            console.log('g error', error);
+        });
+        clientH.on('error', error => {
+            console.log('h error', error);
+        });
+        clientI.on('error', error => {
+            console.log('i error', error);
+        });
+        clientJ.on('error', error => {
+            console.log('j error', error);
+        });
+        clientK.on('error', error => {
+            console.log('k error', error);
+        });
+        clientL.on('error', error => {
+            console.log('l error', error);
+        });
+        clientM.on('error', error => {
+            console.log('m error', error);
+        });
+        clientN.on('error', error => {
+            console.log('n error', error);
+        });
+        clientX.on('error', error => {
+            console.log('x error', error);
+        });
 
         clientA.pipe(clientX);
         clientB.pipe(clientX);
@@ -454,7 +486,11 @@ tap.test(
         clientD.pipe(clientX);
         clientE.pipe(clientX);
         clientF.pipe(clientX);
-        clientG.pipe(clientH).pipe(clientI).pipe(clientJ).pipe(clientX);
+        clientG
+            .pipe(clientH)
+            .pipe(clientI)
+            .pipe(clientJ)
+            .pipe(clientX);
         clientK.pipe(clientX);
         clientL.pipe(clientM).pipe(clientX);
         clientN.pipe(clientX);
