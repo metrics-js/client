@@ -36,7 +36,7 @@
     "benchmark": "^2.1.4",
     "prettier": "^1.18.2",
     "lolex": "^4.2.0",
-    "tap": "^14.6.9"
+    "tap": "^14.9.1"
   },
   "repository": {
     "type": "git",
