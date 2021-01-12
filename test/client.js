@@ -7,7 +7,7 @@ const lolex = require('lolex');
 const tap = require('tap');
 const MetricsClient = require('../lib/client');
 
-const destObjectStream = done => {
+const destObjectStream = (done) => {
     const arr = [];
 
     const dStream = new stream.Writable({
@@ -25,19 +25,22 @@ const destObjectStream = done => {
     return dStream;
 };
 
-tap.test('client() - object type - should be MetricsClient', t => {
+tap.test('client() - object type - should be MetricsClient', (t) => {
     const client = new MetricsClient();
     t.equal(Object.prototype.toString.call(client), '[object MetricsClient]');
     t.end();
 });
 
-tap.test('client() - no "id" argument given - should set a hash on .id', t => {
-    const client = new MetricsClient();
-    t.true(client.id);
-    t.end();
-});
+tap.test(
+    'client() - no "id" argument given - should set a hash on .id',
+    (t) => {
+        const client = new MetricsClient();
+        t.true(client.id);
+        t.end();
+    },
+);
 
-tap.test('client() - "id" argument given - should set value on .id', t => {
+tap.test('client() - "id" argument given - should set value on .id', (t) => {
     const client = new MetricsClient({ id: 'foo' });
     t.equal(client.id, 'foo');
     t.end();
@@ -45,9 +48,9 @@ tap.test('client() - "id" argument given - should set value on .id', t => {
 
 tap.test(
     'client.metric() - used to generate and consume a simple counter',
-    t => {
+    (t) => {
         const client = new MetricsClient();
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 2);
             t.equal(result[0].name, 'valid_name');
             t.end();
@@ -71,11 +74,11 @@ tap.test(
     },
 );
 
-tap.test('client.timer() used to measure a time interval', t => {
+tap.test('client.timer() used to measure a time interval', (t) => {
     const clock = lolex.install();
 
     const client = new MetricsClient();
-    const dest = destObjectStream(result => {
+    const dest = destObjectStream((result) => {
         t.equal(result.length, 1);
         t.equal(result[0].name, 'valid_name');
         t.true(result[0].value > 0.2 && result[0].value < 0.3);
@@ -100,11 +103,11 @@ tap.test('client.timer() used to measure a time interval', t => {
     });
 });
 
-tap.test('client.timer() metric details set at end of timing', t => {
+tap.test('client.timer() metric details set at end of timing', (t) => {
     const clock = lolex.install();
 
     const client = new MetricsClient();
-    const dest = destObjectStream(result => {
+    const dest = destObjectStream((result) => {
         t.equal(result.length, 1);
         t.equal(result[0].name, 'valid_name');
         t.true(result[0].value > 0.2 && result[0].value < 0.3);
@@ -131,9 +134,9 @@ tap.test('client.timer() metric details set at end of timing', t => {
 
 tap.test(
     'client.timer() correct merging between creating and ending timer',
-    t => {
+    (t) => {
         const client = new MetricsClient();
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 1);
             t.equal(result[0].name, 'testing_meta');
             t.equal(result[0].description, 'meta data testing');
@@ -168,7 +171,7 @@ tap.test(
 
 tap.test(
     'client.metric() - metrics is not piped anywhere - should not fill stream buffer',
-    t => {
+    (t) => {
         const client = new MetricsClient();
 
         for (let i = 0; i < 20; i += 1) {
@@ -186,14 +189,14 @@ tap.test(
 
 tap.test(
     'client.metric() - destination is buffering - should emit drop events',
-    t => {
+    (t) => {
         const dropped = [];
         const client = new MetricsClient();
-        client.on('drop', metric => {
+        client.on('drop', (metric) => {
             dropped.push(metric);
         });
 
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 16);
             t.equal(dropped.length, 4);
             // eslint-disable-next-line no-underscore-dangle
@@ -225,11 +228,11 @@ tap.test(
 
 tap.test(
     'client.pipe() - pipe streams into each other - should pipe metrics through',
-    t => {
+    (t) => {
         const clientA = new MetricsClient();
         const clientB = new MetricsClient();
 
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 3);
             t.equal(result[0].name, 'first');
             t.equal(result[2].name, 'third');
@@ -254,12 +257,12 @@ tap.test(
 
 tap.test(
     'client.pipe() - pipe two streams into one - should pipe metrics through',
-    t => {
+    (t) => {
         const clientA = new MetricsClient();
         const clientB = new MetricsClient();
         const clientC = new MetricsClient();
 
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 6);
             t.end();
         });
@@ -282,22 +285,22 @@ tap.test(
     },
 );
 
-tap.test('client.pipe() - circular pipe - should pipe metrics through', t => {
+tap.test('client.pipe() - circular pipe - should pipe metrics through', (t) => {
     const clientA = new MetricsClient();
     const clientB = new MetricsClient();
     const clientC = new MetricsClient();
 
     const result = [];
 
-    clientA.on('drop', metric => {
+    clientA.on('drop', (metric) => {
         result.push(metric);
     });
 
-    clientB.on('drop', metric => {
+    clientB.on('drop', (metric) => {
         result.push(metric);
     });
 
-    clientC.on('drop', metric => {
+    clientC.on('drop', (metric) => {
         result.push(metric);
     });
 
@@ -308,10 +311,7 @@ tap.test('client.pipe() - circular pipe - should pipe metrics through', t => {
         t.end();
     });
 
-    clientA
-        .pipe(clientB)
-        .pipe(clientC)
-        .pipe(clientA);
+    clientA.pipe(clientB).pipe(clientC).pipe(clientA);
 
     clientA.metric({ name: 'a', description: '.' });
     clientB.metric({ name: 'b', description: '.' });
@@ -324,9 +324,9 @@ tap.test('client.pipe() - circular pipe - should pipe metrics through', t => {
 
 tap.test(
     'client.metric() - "id" on constructor should be set as source on Metric object',
-    t => {
+    (t) => {
         const client = new MetricsClient({ id: 'foo' });
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 2);
             t.equal(result[0].source, 'foo');
             t.equal(result[1].source, 'foo');
@@ -353,13 +353,13 @@ tap.test(
 
 tap.test(
     'client.counter() - class instance used to generate and consume a simple counter',
-    t => {
+    (t) => {
         const client = new MetricsClient();
         const counter = client.counter({
             name: 'valid_name',
             description: 'Valid description',
         });
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 2);
             t.equal(result[0].name, 'valid_name');
             t.end();
@@ -378,13 +378,13 @@ tap.test(
 
 tap.test(
     'client.gauge() - class instance used to generate and consume a simple gauge',
-    t => {
+    (t) => {
         const client = new MetricsClient();
         const gauge = client.gauge({
             name: 'valid_name',
             description: 'Valid description',
         });
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 2);
             t.equal(result[0].name, 'valid_name');
             t.equal(result[0].value, 20);
@@ -405,7 +405,7 @@ tap.test(
 
 tap.test(
     'client.pipe() - exceed the default, 10, number of max event listeners - should not cause the process to emit a MaxListenersExceededWarning',
-    t => {
+    (t) => {
         const clientA = new MetricsClient();
         const clientB = new MetricsClient();
         const clientC = new MetricsClient();
@@ -423,60 +423,60 @@ tap.test(
 
         const clientX = new MetricsClient();
 
-        process.on('warning', warning => {
+        process.on('warning', (warning) => {
             if (warning.name === 'MaxListenersExceededWarning') {
                 t.fail();
             }
         });
 
-        const dest = destObjectStream(result => {
+        const dest = destObjectStream((result) => {
             t.equal(result.length, 14);
             t.end();
         });
 
-        clientA.on('error', error => {
+        clientA.on('error', (error) => {
             console.log('a error', error);
         });
-        clientB.on('error', error => {
+        clientB.on('error', (error) => {
             console.log('b error', error);
         });
-        clientC.on('error', error => {
+        clientC.on('error', (error) => {
             console.log('c error', error);
         });
-        clientD.on('error', error => {
+        clientD.on('error', (error) => {
             console.log('d error', error);
         });
-        clientE.on('error', error => {
+        clientE.on('error', (error) => {
             console.log('e error', error);
         });
-        clientF.on('error', error => {
+        clientF.on('error', (error) => {
             console.log('f error', error);
         });
-        clientG.on('error', error => {
+        clientG.on('error', (error) => {
             console.log('g error', error);
         });
-        clientH.on('error', error => {
+        clientH.on('error', (error) => {
             console.log('h error', error);
         });
-        clientI.on('error', error => {
+        clientI.on('error', (error) => {
             console.log('i error', error);
         });
-        clientJ.on('error', error => {
+        clientJ.on('error', (error) => {
             console.log('j error', error);
         });
-        clientK.on('error', error => {
+        clientK.on('error', (error) => {
             console.log('k error', error);
         });
-        clientL.on('error', error => {
+        clientL.on('error', (error) => {
             console.log('l error', error);
         });
-        clientM.on('error', error => {
+        clientM.on('error', (error) => {
             console.log('m error', error);
         });
-        clientN.on('error', error => {
+        clientN.on('error', (error) => {
             console.log('n error', error);
         });
-        clientX.on('error', error => {
+        clientX.on('error', (error) => {
             console.log('x error', error);
         });
 
@@ -486,11 +486,7 @@ tap.test(
         clientD.pipe(clientX);
         clientE.pipe(clientX);
         clientF.pipe(clientX);
-        clientG
-            .pipe(clientH)
-            .pipe(clientI)
-            .pipe(clientJ)
-            .pipe(clientX);
+        clientG.pipe(clientH).pipe(clientI).pipe(clientJ).pipe(clientX);
         clientK.pipe(clientX);
         clientL.pipe(clientM).pipe(clientX);
         clientN.pipe(clientX);

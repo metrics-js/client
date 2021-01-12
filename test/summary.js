@@ -4,27 +4,30 @@ const tap = require('tap');
 const lolex = require('lolex');
 const Summary = require('../lib/summary');
 
-tap.test('summary() - creating a basic summary without options throws', t => {
+tap.test('summary() - creating a basic summary without options throws', (t) => {
     t.throws(() => new Summary());
     t.end();
 });
 
-tap.test('summary().observe() - calling observe with no argument throws', t => {
+tap.test(
+    'summary().observe() - calling observe with no argument throws',
+    (t) => {
+        const summary = new Summary({
+            name: 'valid_name',
+            description: 'Valid description',
+        });
+        t.throws(() => summary.observe());
+        t.end();
+    },
+);
+
+tap.test('summary() - creating a basic summary with minimal arguments', (t) => {
     const summary = new Summary({
         name: 'valid_name',
         description: 'Valid description',
     });
-    t.throws(() => summary.observe());
-    t.end();
-});
 
-tap.test('summary() - creating a basic summary with minimal arguments', t => {
-    const summary = new Summary({
-        name: 'valid_name',
-        description: 'Valid description',
-    });
-
-    summary.on('metric', metric => {
+    summary.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 7);
@@ -39,14 +42,14 @@ tap.test('summary() - creating a basic summary with minimal arguments', t => {
 
 tap.test(
     'summary() - creating a summary with labels and then not populating them',
-    t => {
+    (t) => {
         const summary = new Summary({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: undefined, second: undefined, third: undefined },
         });
 
-        summary.on('metric', metric => {
+        summary.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 7);
@@ -66,14 +69,14 @@ tap.test(
 
 tap.test(
     'summary() - creating a summary with labels and then populating them',
-    t => {
+    (t) => {
         const summary = new Summary({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: undefined, second: undefined, third: undefined },
         });
 
-        summary.on('metric', metric => {
+        summary.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 7);
@@ -99,13 +102,13 @@ tap.test(
 
 tap.test(
     'summary() - creating a summary without labels and then populating them',
-    t => {
+    (t) => {
         const summary = new Summary({
             name: 'valid_name',
             description: 'Valid description',
         });
 
-        summary.on('metric', metric => {
+        summary.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 7);
@@ -131,14 +134,14 @@ tap.test(
 
 tap.test(
     'summary() - creating a summary with some labels and then populating them others (merge)',
-    t => {
+    (t) => {
         const summary = new Summary({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: 'this is first' },
         });
 
-        summary.on('metric', metric => {
+        summary.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 7);
@@ -161,7 +164,7 @@ tap.test(
     },
 );
 
-tap.test('summary() - using timer to time a number of seconds', t => {
+tap.test('summary() - using timer to time a number of seconds', (t) => {
     const clock = lolex.install();
 
     const summary = new Summary({
@@ -170,7 +173,7 @@ tap.test('summary() - using timer to time a number of seconds', t => {
         labels: { first: 'this is first' },
     });
 
-    summary.on('metric', metric => {
+    summary.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 7);
@@ -200,7 +203,7 @@ tap.test('summary() - using timer to time a number of seconds', t => {
 
 tap.test(
     'summary() - using timer to time a number of seconds, label merge',
-    t => {
+    (t) => {
         const clock = lolex.install();
 
         const summary = new Summary({
@@ -209,7 +212,7 @@ tap.test(
             labels: { first: 'this is first' },
         });
 
-        summary.on('metric', metric => {
+        summary.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 7);
@@ -241,14 +244,14 @@ tap.test(
     },
 );
 
-tap.test('summary() - buckets option', t => {
+tap.test('summary() - buckets option', (t) => {
     const summary = new Summary({
         name: 'valid_name',
         description: 'Valid description',
         quantiles: [0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999],
     });
 
-    summary.on('metric', metric => {
+    summary.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 7);
