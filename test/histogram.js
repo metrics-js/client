@@ -1,7 +1,7 @@
 'use strict';
 
 const tap = require('tap');
-const lolex = require('lolex');
+const fakeTimers = require('@sinonjs/fake-timers');
 const Histogram = require('../lib/histogram');
 
 tap.test(
@@ -171,7 +171,7 @@ tap.test(
 );
 
 tap.test('histogram() - using timer to time a number of seconds', (t) => {
-    const clock = lolex.install();
+    const clock = fakeTimers.install();
 
     const histogram = new Histogram({
         name: 'valid_name',
@@ -210,7 +210,7 @@ tap.test('histogram() - using timer to time a number of seconds', (t) => {
 tap.test(
     'histogram() - using timer to time a number of seconds, label merge',
     (t) => {
-        const clock = lolex.install();
+        const clock = fakeTimers.install();
 
         const histogram = new Histogram({
             name: 'valid_name',

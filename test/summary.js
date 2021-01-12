@@ -1,7 +1,7 @@
 'use strict';
 
 const tap = require('tap');
-const lolex = require('lolex');
+const fakeTimers = require('@sinonjs/fake-timers');
 const Summary = require('../lib/summary');
 
 tap.test('summary() - creating a basic summary without options throws', (t) => {
@@ -165,7 +165,7 @@ tap.test(
 );
 
 tap.test('summary() - using timer to time a number of seconds', (t) => {
-    const clock = lolex.install();
+    const clock = fakeTimers.install();
 
     const summary = new Summary({
         name: 'valid_name',
@@ -204,7 +204,7 @@ tap.test('summary() - using timer to time a number of seconds', (t) => {
 tap.test(
     'summary() - using timer to time a number of seconds, label merge',
     (t) => {
-        const clock = lolex.install();
+        const clock = fakeTimers.install();
 
         const summary = new Summary({
             name: 'valid_name',

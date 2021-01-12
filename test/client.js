@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 
 const stream = require('readable-stream');
-const lolex = require('lolex');
+const fakeTimers = require('@sinonjs/fake-timers');
 const tap = require('tap');
 const MetricsClient = require('../lib/client');
 
@@ -75,7 +75,7 @@ tap.test(
 );
 
 tap.test('client.timer() used to measure a time interval', (t) => {
-    const clock = lolex.install();
+    const clock = fakeTimers.install();
 
     const client = new MetricsClient();
     const dest = destObjectStream((result) => {
@@ -104,7 +104,7 @@ tap.test('client.timer() used to measure a time interval', (t) => {
 });
 
 tap.test('client.timer() metric details set at end of timing', (t) => {
-    const clock = lolex.install();
+    const clock = fakeTimers.install();
 
     const client = new MetricsClient();
     const dest = destObjectStream((result) => {
