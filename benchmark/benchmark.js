@@ -26,7 +26,7 @@ add('new Metric()', () => {
 });
 
 suite
-    .on('cycle', ev => {
+    .on('cycle', (ev) => {
         console.log(ev.target.toString());
         if (ev.target.error) {
             console.error(ev.target.error);

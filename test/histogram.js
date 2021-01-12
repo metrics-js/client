@@ -6,7 +6,7 @@ const Histogram = require('../lib/histogram');
 
 tap.test(
     'histogram() - creating a basic histogram without options throws',
-    t => {
+    (t) => {
         t.throws(() => new Histogram());
         t.end();
     },
@@ -14,7 +14,7 @@ tap.test(
 
 tap.test(
     'histogram().observe() - calling observe with no argument throws',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
@@ -26,13 +26,13 @@ tap.test(
 
 tap.test(
     'histogram() - creating a basic histogram with minimal arguments',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -48,14 +48,14 @@ tap.test(
 
 tap.test(
     'histogram() - creating a histogram with labels and then not populating them',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: undefined, second: undefined, third: undefined },
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -75,14 +75,14 @@ tap.test(
 
 tap.test(
     'histogram() - creating a histogram with labels and then populating them',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: undefined, second: undefined, third: undefined },
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -108,13 +108,13 @@ tap.test(
 
 tap.test(
     'histogram() - creating a histogram without labels and then populating them',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -140,14 +140,14 @@ tap.test(
 
 tap.test(
     'histogram() - creating a histogram with some labels and then populating them others (merge)',
-    t => {
+    (t) => {
         const histogram = new Histogram({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: 'this is first' },
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -170,7 +170,7 @@ tap.test(
     },
 );
 
-tap.test('histogram() - using timer to time a number of seconds', t => {
+tap.test('histogram() - using timer to time a number of seconds', (t) => {
     const clock = lolex.install();
 
     const histogram = new Histogram({
@@ -179,7 +179,7 @@ tap.test('histogram() - using timer to time a number of seconds', t => {
         labels: { first: 'this is first' },
     });
 
-    histogram.on('metric', metric => {
+    histogram.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 5);
@@ -209,7 +209,7 @@ tap.test('histogram() - using timer to time a number of seconds', t => {
 
 tap.test(
     'histogram() - using timer to time a number of seconds, label merge',
-    t => {
+    (t) => {
         const clock = lolex.install();
 
         const histogram = new Histogram({
@@ -218,7 +218,7 @@ tap.test(
             labels: { first: 'this is first' },
         });
 
-        histogram.on('metric', metric => {
+        histogram.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 5);
@@ -250,14 +250,14 @@ tap.test(
     },
 );
 
-tap.test('histogram() - buckets option', t => {
+tap.test('histogram() - buckets option', (t) => {
     const histogram = new Histogram({
         name: 'valid_name',
         description: 'Valid description',
         buckets: [0.001, 0.01, 0.1, 1, 10, 100, 1000],
     });
 
-    histogram.on('metric', metric => {
+    histogram.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 5);

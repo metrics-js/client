@@ -3,20 +3,20 @@
 const tap = require('tap');
 const Counter = require('../lib/counter');
 
-tap.test('counter() - creating a basic counter without options throws', t => {
+tap.test('counter() - creating a basic counter without options throws', (t) => {
     t.throws(() => new Counter());
     t.end();
 });
 
 tap.test(
     'counter().inc() - calling inc with no argument results in a 1 being set',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
@@ -30,13 +30,13 @@ tap.test(
     },
 );
 
-tap.test('counter().inc() - calling inc with a value', t => {
+tap.test('counter().inc() - calling inc with a value', (t) => {
     const counter = new Counter({
         name: 'valid_name',
         description: 'Valid description',
     });
 
-    counter.on('metric', metric => {
+    counter.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 2);
@@ -49,13 +49,13 @@ tap.test('counter().inc() - calling inc with a value', t => {
     counter.inc(101);
 });
 
-tap.test('counter() - creating a basic counter with minimal arguments', t => {
+tap.test('counter() - creating a basic counter with minimal arguments', (t) => {
     const counter = new Counter({
         name: 'valid_name',
         description: 'Valid description',
     });
 
-    counter.on('metric', metric => {
+    counter.on('metric', (metric) => {
         t.equal(metric.name, 'valid_name');
         t.equal(metric.description, 'Valid description');
         t.equal(metric.type, 2);
@@ -70,14 +70,14 @@ tap.test('counter() - creating a basic counter with minimal arguments', t => {
 
 tap.test(
     'counter() - creating a counter with labels and then not populating them',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: undefined, second: undefined, third: undefined },
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
@@ -97,13 +97,13 @@ tap.test(
 
 tap.test(
     'counter() - creating a counter without labels and then populating them in the inc method',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
@@ -129,14 +129,14 @@ tap.test(
 
 tap.test(
     'counter() - creating a counter with labels and then populating them',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: null, second: null, third: null },
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
@@ -162,14 +162,14 @@ tap.test(
 
 tap.test(
     'counter() - creating a counter with some labels and then populating them with others in the inc method (merging)',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: 'this is first' },
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
@@ -194,14 +194,14 @@ tap.test(
 
 tap.test(
     'counter() - creating a counter with labels and then populating them without specifying an increment',
-    t => {
+    (t) => {
         const counter = new Counter({
             name: 'valid_name',
             description: 'Valid description',
             labels: { first: null, second: null, third: null },
         });
 
-        counter.on('metric', metric => {
+        counter.on('metric', (metric) => {
             t.equal(metric.name, 'valid_name');
             t.equal(metric.description, 'Valid description');
             t.equal(metric.type, 2);
