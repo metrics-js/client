@@ -195,7 +195,7 @@ class Consumer extends Writable {
                 url = obj.value;
             }
             if (obj.name === 'method') {
-                url = obj.value;
+                method = obj.value;
             }
         });
 
