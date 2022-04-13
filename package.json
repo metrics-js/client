@@ -34,7 +34,7 @@
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "3.4.1",
-    "@sinonjs/fake-timers": "6.0.1",
+    "@sinonjs/fake-timers": "9.1.2",
     "prettier": "2.5.1",
     "tap": "14.11.0"
   },
