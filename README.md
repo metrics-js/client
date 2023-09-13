@@ -190,7 +190,7 @@ class Consumer extends Writable {
         let url;
         let method;
 
-        metric.labels.forEach(obj => {
+        metric.labels.forEach((obj) => {
             if (obj.name === 'url') {
                 url = obj.value;
             }
@@ -315,12 +315,12 @@ Creates an instance of a `Histogram` class which can be used to populate the met
 
 **options**
 
-| name          | description                                   | type     | default | required |
-| ------------- | --------------------------------------------- | -------- | ------- | -------- |
-| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_ | `string` | null    | `true`   |
-| `description` | Metric description                            | `string` | null    | `true`   |
-| `meta`        | Available to be used to hold any misc data.   | `object` | null    | `false`  |
-| `labels`      | Available to be used to hold label data.      | `object` | null    | `false`  |
+| name          | description                                   | type       | default | required |
+| ------------- | --------------------------------------------- | ---------- | ------- | -------- |
+| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_ | `string`   | null    | `true`   |
+| `description` | Metric description                            | `string`   | null    | `true`   |
+| `buckets`     | Set custom buckets                            | `number[]` | null    | `false`  |
+| `labels`      | Available to be used to hold label data.      | `object`   | null    | `false`  |
 
 _Example_
 
@@ -333,10 +333,10 @@ const histogram = client.histogram(options);
 
 Method that when called will populate the metrics stream with a histogram value.
 
-| name      | description                                        | type      | default | required |
-| --------- | -------------------------------------------------- | --------- | ------- | -------- |
-| `value`   | Value to set the gauge to                          | `integer` | null    | `true`   |
-| `options` | Object that can be used to specify labels and meta | `object`  | `{}`    | `false`  |
+| name      | description                                           | type      | default | required |
+| --------- | ----------------------------------------------------- | --------- | ------- | -------- |
+| `value`   | Value to set the gauge to                             | `integer` | null    | `true`   |
+| `options` | Object that can be used to specify labels and buckets | `object`  | `{}`    | `false`  |
 
 _Example_
 
@@ -345,18 +345,19 @@ const histogram = client.histogram(options);
 
 histogram.observe(0.001); // observe value 0.001
 histogram.observe(5, { labels: { url: 'http://finn.no' } }); // observe value 5, specify labels
-histogram.observe(0.01, {
-    meta: { buckets: [0.0001, 0.001, 0.01, 0.1, 0.5, 1, 10, 100] }, // observe 0.01, use meta to specify bucket options
-});
+histogram.observe(
+    0.01,
+    { buckets: [0.0001, 0.001, 0.01, 0.1, 0.5, 1, 10, 100] }, // observe 0.01, set buckets
+);
 ```
 
 ##### histogram.timer(options)
 
 Method that when called will return an end function for use in measuring the time between 2 points
 
-| name      | description                                        | type     | default | required |
-| --------- | -------------------------------------------------- | -------- | ------- | -------- |
-| `options` | Object that can be used to specify labels and meta | `object` | `{}`    | `false`  |
+| name      | description                                           | type     | default | required |
+| --------- | ----------------------------------------------------- | -------- | ------- | -------- |
+| `options` | Object that can be used to specify labels and buckets | `object` | `{}`    | `false`  |
 
 _Examples_
 
@@ -381,7 +382,9 @@ end({ labels: { url: 'http://finn.no' } }); // set labels in end function
 ```
 
 ```js
-const end = histogram.timer(meta: { buckets: [0.0001, 0.001, 0.01, 0.1, 0.5, 1, 10, 100] }); // start timer, set meta
+const end = histogram.timer({
+    buckets: [0.0001, 0.001, 0.01, 0.1, 0.5, 1, 10, 100],
+}); // start timer, set buckets
 // stuff happens
 end();
 ```
@@ -392,12 +395,12 @@ Creates an instance of a `Summary` class which can be used to populate the metri
 
 **options**
 
-| name          | description                                   | type     | default | required |
-| ------------- | --------------------------------------------- | -------- | ------- | -------- |
-| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_ | `string` | null    | `true`   |
-| `description` | Metric description                            | `string` | null    | `true`   |
-| `meta`        | Available to be used to hold any misc data.   | `object` | null    | `false`  |
-| `labels`      | Available to be used to hold label data.      | `object` | null    | `false`  |
+| name          | description                                   | type       | default | required |
+| ------------- | --------------------------------------------- | ---------- | ------- | -------- |
+| `name`        | Metric name. valid characters: a-z,A-Z,0-9,\_ | `string`   | null    | `true`   |
+| `description` | Metric description                            | `string`   | null    | `true`   |
+| `quantiles`   | Set custom quantiles                          | `number[]` | null    | `false`  |
+| `labels`      | Available to be used to hold label data.      | `object`   | null    | `false`  |
 
 _Example_
 
@@ -410,10 +413,10 @@ const summary = client.summary(options);
 
 Method that when called will populate the metrics stream with a summary value.
 
-| name      | description                                        | type      | default | required |
-| --------- | -------------------------------------------------- | --------- | ------- | -------- |
-| `value`   | Value to set the summary to                        | `integer` | null    | `true`   |
-| `options` | Object that can be used to specify labels and meta | `object`  | `{}`    | `false`  |
+| name      | description                                             | type      | default | required |
+| --------- | ------------------------------------------------------- | --------- | ------- | -------- |
+| `value`   | Value to set the summary to                             | `integer` | null    | `true`   |
+| `options` | Object that can be used to specify labels and quantiles | `object`  | `{}`    | `false`  |
 
 _Example_
 
@@ -422,18 +425,19 @@ const summary = client.summary(options);
 
 summary.observe(0.001); // observe value 0.001
 summary.observe(5, { labels: { url: 'http://finn.no' } }); // observe value 5, specify labels
-summary.observe(0.01, {
-    meta: { quantiles: [0.001, 0.01, 0.5, 0.9, 0.99] }, // observe 0.01, use meta to specify quantile meta
-});
+summary.observe(
+    0.01,
+    { quantiles: [0.001, 0.01, 0.5, 0.9, 0.99] }, // observe 0.01, use meta to specify quantile meta
+);
 ```
 
 ##### summary.timer(options)
 
 Method that when called will return an end function for use in measuring the time between 2 points
 
-| name      | description                                        | type     | default | required |
-| --------- | -------------------------------------------------- | -------- | ------- | -------- |
-| `options` | Object that can be used to specify labels and meta | `object` | `{}`    | `false`  |
+| name      | description                                             | type     | default | required |
+| --------- | ------------------------------------------------------- | -------- | ------- | -------- |
+| `options` | Object that can be used to specify labels and quantiles | `object` | `{}`    | `false`  |
 
 _Examples_
 
@@ -458,9 +462,7 @@ end({ labels: { url: 'http://finn.no' } }); // set labels in end function
 ```
 
 ```js
-const end = summary.timer({
-    meta: { quantiles: [0.001, 0.01, 0.5, 0.9, 0.99] },
-}); // start timer, set meta
+const end = summary.timer({ quantiles: [0.001, 0.01, 0.5, 0.9, 0.99] }); // start timer, set meta
 // stuff happens
 end();
 ```
@@ -576,7 +578,7 @@ _Example_
 
 ```js
 const client = new Metrics();
-client.on('drop', metric => {
+client.on('drop', (metric) => {
     console.log('dropped metric', metric);
 });
 ```
