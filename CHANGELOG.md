@@ -5,7 +5,10 @@ Notable changes to this project.
 The latest version of this document is always available in
 [releases][releases-url].
 
-## [unreleased]
+
+## [2.5.2] - 2023-09-19
+
+- Fixed type information - [#78](https://github.com/metrics-js/client/pull/78)
 
 ## [2.4.1] - 2019-03-08
 
@@ -54,7 +57,7 @@ The latest version of this document is always available in
 
 -   Initial release.
 
-[unreleased]: https://github.com/metrics-js/client/compare/v2.4.1...HEAD
+[2.5.2]: https://github.com/metrics-js/client/compare/v2.4.1...v2.5.2
 [2.4.1]: https://github.com/metrics-js/client/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/metrics-js/client/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/metrics-js/client/compare/v2.3.0...v2.3.1
