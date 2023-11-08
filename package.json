@@ -30,14 +30,21 @@
     "time-span": "^4.0.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "11.1.0",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "9.2.1",
+    "@semantic-release/npm": "11.0.1",
+    "@semantic-release/release-notes-generator": "12.1.0",
+    "@sinonjs/fake-timers": "6.0.1",
     "benchmark": "2.1.4",
     "eslint": "7.32.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "3.4.1",
-    "@sinonjs/fake-timers": "6.0.1",
     "prettier": "2.8.8",
+    "semantic-release": "22.0.7",
     "tap": "14.11.0"
   },
   "repository": {
