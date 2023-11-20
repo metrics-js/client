@@ -44,7 +44,7 @@
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "3.4.1",
     "prettier": "2.8.8",
-    "semantic-release": "22.0.7",
+    "semantic-release": "22.0.8",
     "tap": "14.11.0"
   },
   "repository": {
