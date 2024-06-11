@@ -43,7 +43,7 @@
 		"eslint-plugin-prettier": "5.1.3",
 		"prettier": "3.2.5",
 		"semantic-release": "23.0.2",
-		"tap": "18.7.1"
+		"tap": "19.2.5"
 	},
 	"repository": {
 		"type": "git",
