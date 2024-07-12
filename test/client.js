@@ -1,7 +1,5 @@
 "use strict";
 
-/* eslint-disable no-console */
-
 const stream = require("readable-stream");
 const fakeTimers = require("@sinonjs/fake-timers");
 const tap = require("tap");
@@ -170,7 +168,6 @@ tap.test("client.metric() - metrics is not piped anywhere - should not fill stre
 		});
 	}
 
-	// eslint-disable-next-line no-underscore-dangle
 	t.equal(client._readableState.buffer.length, 0);
 	t.end();
 });
@@ -185,7 +182,7 @@ tap.test("client.metric() - destination is buffering - should emit drop events",
 	const dest = destObjectStream((result) => {
 		t.equal(result.length, 16);
 		t.equal(dropped.length, 4);
-		// eslint-disable-next-line no-underscore-dangle
+
 		t.equal(client._readableState.buffer.length, 0);
 		t.end();
 	});
@@ -203,7 +200,6 @@ tap.test("client.metric() - destination is buffering - should emit drop events",
 		});
 	}
 
-	// eslint-disable-next-line no-underscore-dangle
 	t.equal(client._readableState.buffer.length, 0);
 
 	setImmediate(() => {
@@ -219,9 +215,9 @@ tap.test("client.pipe() - pipe streams into each other - should pipe metrics thr
 		t.equal(result.length, 3);
 		t.equal(result[0].name, "first");
 		t.equal(result[2].name, "third");
-		// eslint-disable-next-line no-underscore-dangle
+
 		t.equal(clientA._readableState.buffer.length, 0);
-		// eslint-disable-next-line no-underscore-dangle
+
 		t.equal(clientB._readableState.buffer.length, 0);
 		t.end();
 	});
