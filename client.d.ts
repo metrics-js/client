@@ -45,7 +45,7 @@ declare namespace MetricsClient {
          * counter.inc(10, { labels: { url: 'https://www.mysite.com' } });
          */
         inc(
-            value?: number | BaseMetricsOptions,
+            value?: number | Pick<BaseMetricsOptions, 'labels'>,
             options?: Pick<BaseMetricsOptions, 'labels'>,
         ): void;
     }
