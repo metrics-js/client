@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/metrics-js/client/compare/v2.5.2...v2.5.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* correct the BaseMetricsOptions value for inc ([#102](https://github.com/metrics-js/client/issues/102)) ([89cb0a8](https://github.com/metrics-js/client/commit/89cb0a88d1e6c468406d9d452b4598036c4d7094))
+
 # Changelog
 
 Notable changes to this project.

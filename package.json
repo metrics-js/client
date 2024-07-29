@@ -1,6 +1,6 @@
 {
   "name": "@metrics/client",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "description": "A streaming metric producer. Allows producing counters, gauges, histograms and summaries in a way that is independent of your metrics system.",
   "main": "lib/client.js",
   "types": "client.d.ts",
