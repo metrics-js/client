@@ -1,3 +1,10 @@
+## [2.5.4](https://github.com/metrics-js/client/compare/v2.5.3...v2.5.4) (2024-11-13)
+
+
+### Bug Fixes
+
+* include types/readable-stream as a dependency ([#111](https://github.com/metrics-js/client/issues/111)) ([7a4f9d4](https://github.com/metrics-js/client/commit/7a4f9d46701819d204a6d310d82aa5d084eff1d5))
+
 ## [2.5.3](https://github.com/metrics-js/client/compare/v2.5.2...v2.5.3) (2024-07-29)
 
 
