@@ -39,11 +39,11 @@
     "@semantic-release/release-notes-generator": "14.0.1",
     "@sinonjs/fake-timers": "11.2.2",
     "benchmark": "2.1.4",
-    "eslint": "9.16.0",
+    "eslint": "9.17.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "globals": "15.9.0",
-    "prettier": "3.4.1",
+    "prettier": "3.4.2",
     "semantic-release": "24.1.2",
     "tap": "18.8.0"
   },
