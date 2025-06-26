@@ -1,3 +1,10 @@
+## [2.5.5](https://github.com/metrics-js/client/compare/v2.5.4...v2.5.5) (2025-06-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/readable-stream to v4.0.21 ([#125](https://github.com/metrics-js/client/issues/125)) ([f13a8d5](https://github.com/metrics-js/client/commit/f13a8d5bb4e03bb302e4251879a8de0d3a9cbc01))
+
 ## [2.5.4](https://github.com/metrics-js/client/compare/v2.5.3...v2.5.4) (2024-11-13)
 
 
