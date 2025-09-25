@@ -40,7 +40,7 @@
     "@sinonjs/fake-timers": "11.2.2",
     "benchmark": "2.1.4",
     "eslint": "9.35.0",
-    "eslint-config-prettier": "9.1.2",
+    "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.4",
     "globals": "15.9.0",
     "prettier": "3.6.2",
