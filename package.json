@@ -31,12 +31,7 @@
     "time-span": "^4.0.0"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/commit-analyzer": "13.0.1",
-    "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "10.3.5",
-    "@semantic-release/npm": "12.0.2",
-    "@semantic-release/release-notes-generator": "14.1.0",
+    "@metrics/semantic-release-config": "1.0.0",
     "@sinonjs/fake-timers": "11.2.2",
     "benchmark": "2.1.4",
     "eslint": "9.35.0",
@@ -44,7 +39,7 @@
     "eslint-plugin-prettier": "5.5.4",
     "globals": "15.9.0",
     "prettier": "3.6.2",
-    "semantic-release": "24.2.7",
+    "semantic-release": "25.0.2",
     "tap": "18.8.0"
   },
   "repository": {
