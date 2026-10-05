@@ -28,7 +28,7 @@
     "@metrics/metric": "^2.3.2",
     "@types/readable-stream": "^4.0.0",
     "readable-stream": "^3.4.0",
-    "time-span": "^4.0.0"
+    "time-span": "^5.0.0"
   },
   "devDependencies": {
     "@metrics/semantic-release-config": "1.0.0",
